@@ -1,0 +1,38 @@
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Login"
+             Title="Login">
+
+    <VerticalStackLayout
+        BackgroundColor="LightBlue"
+        Padding="25"
+        Spacing="25">
+        <Label 
+            Style="{StaticResource TextTarget}"
+            Text="Login Page"
+            FontAttributes="Italic"
+            FontSize="25"/>
+        <Image
+                Source="../logo.png"
+                HeightRequest="250"
+                Aspect="AspectFit"
+                />
+        <Entry 
+            x:Name="IsLoginTrue"
+            MaxLength="20"
+            Placeholder="Nickname"
+            TextColor="Black"
+            />
+
+        <Entry
+            x:Name="IsPasswordTrue"
+            MaxLength="20"
+            Placeholder="Password"
+            IsPassword="True"
+            />
+        <Button
+            x:Name=""
+            ></Button>
+    </VerticalStackLayout>
+</ContentPage>

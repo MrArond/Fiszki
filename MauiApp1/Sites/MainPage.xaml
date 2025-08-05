@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            BackgroundColor="LightBlue"
+            Padding="30,0"
+            Spacing="25">
+            
+            <Label
+                
+            Style="{StaticResource TextTarget}"
+            Text="Welcome on flashcards"
+            SemanticProperties.HeadingLevel="Level1"
+                Margin="0,50,0,0"/>
+            <Image
+                Source="logo.png"
+                HeightRequest="250"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+
+            <Button
+                x:Name="LoginBtn"
+                Text="Login" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="LoginButton"
+                WidthRequest="100"
+                HeightRequest="50"
+                HorizontalOptions="Fill"/>
+            <Button
+                x:Name="RegisterBtn"
+                Text="Register "
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="RegisterButton"
+                WidthRequest="100"
+                HeightRequest="50"
+                HorizontalOptions="Fill"
+                Margin="0,25,0,0"/>
+            
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
