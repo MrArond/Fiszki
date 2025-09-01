@@ -1,5 +1,6 @@
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:components="clr-namespace:MauiApp1.Sites"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Login"
              Title="Login">
@@ -19,20 +20,27 @@
                 Aspect="AspectFit"
                 />
         <Entry 
+            Background="Gray"
             x:Name="IsLoginTrue"
             MaxLength="20"
-            Placeholder="Nickname"
+            Placeholder="Login"
             TextColor="Black"
             />
 
         <Entry
+            Background="Gray"
             x:Name="IsPasswordTrue"
             MaxLength="20"
             Placeholder="Password"
             IsPassword="True"
             />
         <Button
-            x:Name=""
-            ></Button>
+            x:Name="LoginButton"
+            Text="Log in"
+            BackgroundColor="Grey"
+            Clicked="OnLoginClicked"
+            />
+        <components:Components
+            />
     </VerticalStackLayout>
 </ContentPage>

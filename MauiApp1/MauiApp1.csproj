@@ -65,6 +65,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Sites\Components.xaml.cs">
+	    <DependentUpon>Components.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Sites\Test.xaml.cs">
+	    <DependentUpon>Test.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Sites\Register.xaml.cs">
 	    <DependentUpon>Register.xaml</DependentUpon>
 	  </Compile>
@@ -74,7 +80,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Sites\NewPage1.xaml">
+	  <MauiXaml Update="Sites\Components.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Sites\Test.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Sites\Register.xaml">

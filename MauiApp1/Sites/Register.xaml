@@ -1,4 +1,5 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:components="clr-namespace:MauiApp1.Sites"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Register"
              Title="Register">
@@ -10,15 +11,54 @@
 
             <Label
             
-        Style="{StaticResource TextTarget}"
-        Text="Welcome on flashcards"
-        SemanticProperties.HeadingLevel="Level1"
+            Style="{StaticResource TextTarget}"
+            Text="Welcome on flashcards"
+            SemanticProperties.HeadingLevel="Level1"
             Margin="0,50,0,0"/>
+            
             <Image
             Source="logo.png"
             HeightRequest="250"
             Aspect="AspectFit"
             SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+            
+            <Entry
+                x:Name="NickNameTrue"
+                MaxLength="20"
+                TextColor="#def3ff"
+                Placeholder="Nickname"
+                BackgroundColor="Gray"/>
+                
+            
+            <Entry
+                x:Name="EmailTrue"
+                MaxLength="20"
+                TextColor="#def3ff"
+                Placeholder="Email"
+                BackgroundColor="Gray"/>
+            
+            <Entry
+                x:Name="PasswordTrue"
+                MaxLength="20"
+                TextColor="#def3ff"
+                Placeholder="Password"
+                IsPassword="True"
+                BackgroundColor="Gray"/>
+            <Entry
+                x:Name="PasswordAgain"
+                MaxLength="20"
+                TextColor="#def3ff"
+                Placeholder="Password"
+                IsPassword="True"
+                BackgroundColor="Gray"/>
+            <Button
+                x:Name="RegisterButton"
+                Background="Aqua"
+                Text="Register"
+                Clicked="RegisterFunction"
+                />
+            <components:Components/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
