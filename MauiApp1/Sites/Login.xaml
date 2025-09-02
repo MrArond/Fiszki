@@ -21,9 +21,9 @@
                 />
         <Entry 
             Background="Gray"
-            x:Name="IsLoginTrue"
+            x:Name="IsEmailTrue"
             MaxLength="20"
-            Placeholder="Login"
+            Placeholder="Email"
             TextColor="Black"
             />
 

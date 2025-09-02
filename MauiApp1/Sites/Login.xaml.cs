@@ -1,38 +1,35 @@
 using MauiApp1.Sites;
+using MauiApp1.DTOs;
+using MauiApp1.Services;
+
 using System.Text.Json;
 
 namespace MauiApp1;
 
 public partial class Login : ContentPage
 {
-    public Login()
+    private readonly AuthClient _authClient;
+    public Login(AuthClient authClient)
     {
         InitializeComponent();
-
+        _authClient = authClient;
     }
     private async void OnLoginClicked(object sender, EventArgs e)
     {
 
-        LoginModel loginModel = new LoginModel()
+        var loginDTO = new LoginDTO
         {
-            Login = IsLoginTrue.Text,
+            Email = IsEmailTrue.Text,
             Password = IsPasswordTrue.Text
         };
 
-        
 
-        if (!string.IsNullOrWhiteSpace(loginModel.Login) && !string.IsNullOrWhiteSpace(loginModel.Password))
+
+        if (!string.IsNullOrWhiteSpace(loginDTO.Email) && !string.IsNullOrWhiteSpace(loginDTO.Password))
         {
 
-            string json = JsonSerializer.Serialize(loginModel);
+            var response = await _authClient.LoginAsync(loginDTO);
 
-            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-            HttpClient client = new HttpClient();
-
-            client.BaseAddress = new Uri("http://localhost:5008");
-
-            HttpResponseMessage response = await client.PostAsync("/api/Auth/Login", content);
             if (response.IsSuccessStatusCode)
             {
                 await Shell.Current.GoToAsync(nameof(Test), true);

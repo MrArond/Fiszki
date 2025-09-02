@@ -1,47 +1,43 @@
 using System.Text.Json;
-
+using MauiApp1.DTOs;
+using MauiApp1.Services;
 namespace MauiApp1;
 
 public partial class Register : ContentPage
 {
-    public Register()
+    private readonly AuthClient _authClient;
+
+
+    public Register(AuthClient authClient)
     {
         InitializeComponent();
+        _authClient = authClient;
     }
     private async void RegisterFunction(object sender, EventArgs e)
     {
 
-        RegisterModel registerModel = new RegisterModel
+        var registerDTO = new RegisterDTO
         {
-            Nickname = NickNameTrue.Text,
+            NickName = NickNameTrue.Text,
             Email = EmailTrue.Text,
             Password = PasswordTrue.Text
         };
+
         string PasswordAgainTrue = PasswordAgain.Text;
         
-        if(!string.IsNullOrWhiteSpace(registerModel.Nickname) && !string.IsNullOrWhiteSpace(registerModel.Email) && registerModel.Password == PasswordAgainTrue )
+        if(!string.IsNullOrWhiteSpace(registerDTO.NickName) && !string.IsNullOrWhiteSpace(registerDTO.Email) && registerDTO.Password == PasswordAgainTrue )
         {
-            string json = JsonSerializer.Serialize(registerModel);
+            var response = await _authClient.RegisterAsync(registerDTO);
 
-            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-            HttpClient client = new HttpClient();
-
-            client.BaseAddress = new Uri("http://localhost:5008");
-
-            HttpResponseMessage response = await client.PostAsync("/api/Auth/Register", content);
-
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+            if (response.IsSuccessStatusCode)
+            {
+                await Shell.Current.GoToAsync($"//{nameof(MainPage)}", true);
+            }
+            else
+            {
+                await DisplayAlert("B³¹d", "Rejestracja siê nie powiod³a.", "OK");
+            }
         }
     }
 
-}
-public class RegisterModel
-{
-
-    public string Nickname { get; set; } = string.Empty;
-
-    public string Email { get; set; } = string.Empty;
-
-    public string Password { get; set; } = string.Empty;
 }
