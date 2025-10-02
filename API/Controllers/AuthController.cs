@@ -16,7 +16,7 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("Register")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]RegisterDTO t)
         {
             var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == t.Email);
@@ -50,6 +50,7 @@ namespace API.Controllers
             };
                 var token = _jwtService.GenerateJwtToken(claims);
                 return Ok(new { token = token.EncodedPayload });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
             }
                     
                 
