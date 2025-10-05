@@ -1,4 +1,3 @@
-using System.Text.Json;
 using MauiApp1.DTOs;
 using MauiApp1.Services;
 namespace MauiApp1;
@@ -24,8 +23,8 @@ public partial class Register : ContentPage
         };
 
         string PasswordAgainTrue = PasswordAgain.Text;
-        
-        if(!string.IsNullOrWhiteSpace(registerDTO.NickName) && !string.IsNullOrWhiteSpace(registerDTO.Email) && registerDTO.Password == PasswordAgainTrue )
+
+        if (!string.IsNullOrWhiteSpace(registerDTO.NickName) && !string.IsNullOrWhiteSpace(registerDTO.Email) && registerDTO.Password == PasswordAgainTrue && !EmailTrue.Text.Contains("@"))
         {
             var response = await _authClient.RegisterAsync(registerDTO);
 

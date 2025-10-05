@@ -8,7 +8,7 @@ namespace API.Migrations
     /// <inheritdoc />
     public partial class Migrations : Migration
     {
-        /// <inheritdoc />
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(

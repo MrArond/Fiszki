@@ -1,41 +1,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:components="clr-namespace:MauiApp1.Sites"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Register"
              Title="Register">
+
     <ScrollView>
         <VerticalStackLayout
-        BackgroundColor="LightBlue"
-        Padding="30,0"
-        Spacing="25">
+            BackgroundColor="LightBlue"
+            Padding="30,0"
+            Spacing="25">
 
             <Label
-            
-            Style="{StaticResource TextTarget}"
-            Text="Welcome on flashcards"
-            SemanticProperties.HeadingLevel="Level1"
-            Margin="0,50,0,0"/>
-            
+                Style="{StaticResource TextTarget}"
+                Text="Welcome on flashcards"
+                SemanticProperties.HeadingLevel="Level1"
+                Margin="0,50,0,0" />
+
             <Image
-            Source="logo.png"
-            HeightRequest="250"
-            Aspect="AspectFit"
-            SemanticProperties.Description="dot net bot in a hovercraft number nine" />
-            
+                Source="logo.png"
+                HeightRequest="250"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+
+           
             <Entry
                 x:Name="NickNameTrue"
                 MaxLength="20"
                 TextColor="#def3ff"
                 Placeholder="Nickname"
-                BackgroundColor="Gray"/>
-                
-            
+                BackgroundColor="Gray" />
+
             <Entry
                 x:Name="EmailTrue"
-                MaxLength="20"
+                MaxLength="50"
                 TextColor="#def3ff"
                 Placeholder="Email"
-                BackgroundColor="Gray"/>
+                BackgroundColor="Gray">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior 
+                        RegexPattern=".+@.+" 
+                        Flags="ValidateOnValueChanged" />
+                </Entry.Behaviors>
+            </Entry>
+
             
             <Entry
                 x:Name="PasswordTrue"
@@ -43,21 +51,25 @@
                 TextColor="#def3ff"
                 Placeholder="Password"
                 IsPassword="True"
-                BackgroundColor="Gray"/>
+                BackgroundColor="Gray" />
+
+            
             <Entry
                 x:Name="PasswordAgain"
                 MaxLength="20"
                 TextColor="#def3ff"
-                Placeholder="Password"
+                Placeholder="Repeat password"
                 IsPassword="True"
-                BackgroundColor="Gray"/>
+                BackgroundColor="Gray" />
+
+            
             <Button
                 x:Name="RegisterButton"
-                Background="Aqua"
+                BackgroundColor="Aqua"
                 Text="Register"
-                Clicked="RegisterFunction"
-                />
-            <components:Components/>
+                Clicked="RegisterFunction" />
+
+            <components:Components />
 
         </VerticalStackLayout>
     </ScrollView>
