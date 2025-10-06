@@ -23,8 +23,8 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            Random random = new Random();
-            User User = new User { Id = random.Next(), Email = t.Email, Nickname = t.NickName, Password = t.Password };
+
+            User User = new User { Email = t.Email, Nickname = t.NickName, Password = t.Password };
             _datacontext.Users.Add(User);
             _datacontext.SaveChanges();
             return Ok(new { Message = "Device registered successfully" });
@@ -45,7 +45,8 @@ namespace API.Controllers
                 var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Sub, user.Nickname!),
-                new(JwtRegisteredClaimNames.Email, user.Email!)
+                new(JwtRegisteredClaimNames.Email, user.Email!),
+                new(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
                 var token = _jwtService.GenerateJwtToken(claims);
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });

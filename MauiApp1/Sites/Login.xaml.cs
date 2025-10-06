@@ -1,8 +1,6 @@
-using MauiApp1.Sites;
 using MauiApp1.DTOs;
 using MauiApp1.Services;
-
-using System.Text.Json;
+using MauiApp1.Sites;
 
 namespace MauiApp1;
 
@@ -20,7 +18,8 @@ public partial class Login : ContentPage
         var loginDTO = new LoginDTO
         {
             Email = IsEmailTrue.Text,
-            Password = IsPasswordTrue.Text
+            Password = IsPasswordTrue.Text,
+
         };
 
 
