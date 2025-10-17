@@ -8,23 +8,25 @@
             BackgroundColor="LightBlue"
             Padding="30,0"
             Spacing="25">
-            
+
             <Label
-                
-            Style="{StaticResource TextTarget}"
-            Text="Welcome on flashcards"
-            SemanticProperties.HeadingLevel="Level1"
-                Margin="0,50,0,0"/>
+            Text="Fishsticks"
+            FontSize="32"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            LineBreakMode="WordWrap"
+            Margin="0,20,0,20" />   
             <Image
                 Source="logo.png"
                 HeightRequest="250"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+                />
 
             <Button
                 x:Name="LoginBtn"
                 Text="Login" 
-                SemanticProperties.Hint="Counts the number of times you click"
+                
                 Clicked="LoginButton"
                 WidthRequest="100"
                 HeightRequest="50"
@@ -32,7 +34,7 @@
             <Button
                 x:Name="RegisterBtn"
                 Text="Register "
-                SemanticProperties.Hint="Counts the number of times you click"
+                
                 Clicked="RegisterButton"
                 WidthRequest="100"
                 HeightRequest="50"

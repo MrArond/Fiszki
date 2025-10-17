@@ -6,8 +6,8 @@ public partial class Components : ContentView
     {
         InitializeComponent();
     }
-    private async void TestButton(object sender, EventArgs e)
+    private async void Go_Back(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//MainPage");
+        await Shell.Current.GoToAsync("//MainPage", true);
     }
 }

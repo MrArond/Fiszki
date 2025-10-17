@@ -10,35 +10,46 @@
         Padding="25"
         Spacing="25">
         <Label 
-            Style="{StaticResource TextTarget}"
             Text="Login Page"
-            FontAttributes="Italic"
-            FontSize="25"/>
+        FontSize="32"
+        FontAttributes="Bold"
+        HorizontalOptions="Center"
+        HorizontalTextAlignment="Center"
+        LineBreakMode="WordWrap"
+        Margin="0,20,0,20" />
         <Image
                 Source="../logo.png"
                 HeightRequest="250"
                 Aspect="AspectFit"
                 />
         <Entry 
-            Background="Gray"
+            Background="White"
             x:Name="IsEmailTrue"
             MaxLength="20"
             Placeholder="Email"
             TextColor="Black"
+            WidthRequest="400"
+            HeightRequest="50"
+            
             />
 
         <Entry
-            Background="Gray"
+            Background="White"
             x:Name="IsPasswordTrue"
             MaxLength="20"
             Placeholder="Password"
             IsPassword="True"
+            WidthRequest="400"
+            HeightRequest="50"
+            
             />
         <Button
             x:Name="LoginButton"
             Text="Log in"
-            BackgroundColor="Grey"
             Clicked="OnLoginClicked"
+            CornerRadius="20"
+            WidthRequest="100"
+            HeightRequest="50"
             />
         <components:Components
             />

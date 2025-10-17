@@ -5,6 +5,7 @@
              x:Class="MauiApp1.Register"
              Title="Register">
 
+    
     <ScrollView>
         <VerticalStackLayout
             BackgroundColor="LightBlue"
@@ -12,10 +13,13 @@
             Spacing="25">
 
             <Label
-                Style="{StaticResource TextTarget}"
-                Text="Welcome on flashcards"
-                SemanticProperties.HeadingLevel="Level1"
-                Margin="0,50,0,0" />
+                Text="Register Page"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap"
+                Margin="0,20,0,20" />
 
             <Image
                 Source="logo.png"
@@ -27,20 +31,26 @@
             <Entry
                 x:Name="NickNameTrue"
                 MaxLength="20"
-                TextColor="#def3ff"
+                
                 Placeholder="Nickname"
-                BackgroundColor="Gray" />
+                BackgroundColor="White" 
+                TextColor="Black"/>
 
             <Entry
                 x:Name="EmailTrue"
                 MaxLength="50"
-                TextColor="#def3ff"
+                TextColor="Black"
                 Placeholder="Email"
-                BackgroundColor="Gray">
+                BackgroundColor="White">
+                
                 <Entry.Behaviors>
                     <toolkit:TextValidationBehavior 
-                        RegexPattern=".+@.+" 
-                        Flags="ValidateOnValueChanged" />
+                        x:Name="EmailValidator"
+                        RegexPattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" 
+                        Flags="ValidateOnValueChanged"
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        ValidStyle="{StaticResource ValidEntryStyle}" />
+
                 </Entry.Behaviors>
             </Entry>
 
@@ -48,26 +58,26 @@
             <Entry
                 x:Name="PasswordTrue"
                 MaxLength="20"
-                TextColor="#def3ff"
+                TextColor="Black"
                 Placeholder="Password"
                 IsPassword="True"
-                BackgroundColor="Gray" />
+                BackgroundColor="White" />
 
             
             <Entry
                 x:Name="PasswordAgain"
                 MaxLength="20"
-                TextColor="#def3ff"
+                TextColor="Black"
                 Placeholder="Repeat password"
                 IsPassword="True"
-                BackgroundColor="Gray" />
+                BackgroundColor="White" />
 
             
             <Button
                 x:Name="RegisterButton"
-                BackgroundColor="Aqua"
                 Text="Register"
-                Clicked="RegisterFunction" />
+                Clicked="RegisterFunction"
+                CornerRadius="20"/>
 
             <components:Components />
 

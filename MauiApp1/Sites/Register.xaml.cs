@@ -1,4 +1,4 @@
-using MauiApp1.DTOs;
+ï»¿using MauiApp1.DTOs;
 using MauiApp1.Services;
 namespace MauiApp1;
 
@@ -15,6 +15,8 @@ public partial class Register : ContentPage
     private async void RegisterFunction(object sender, EventArgs e)
     {
 
+
+
         var registerDTO = new RegisterDTO
         {
             NickName = NickNameTrue.Text,
@@ -24,7 +26,10 @@ public partial class Register : ContentPage
 
         string PasswordAgainTrue = PasswordAgain.Text;
 
-        if (!string.IsNullOrWhiteSpace(registerDTO.NickName) && !string.IsNullOrWhiteSpace(registerDTO.Email) && registerDTO.Password == PasswordAgainTrue && !EmailTrue.Text.Contains("@"))
+        if (!string.IsNullOrWhiteSpace(registerDTO.NickName)
+            && !string.IsNullOrWhiteSpace(registerDTO.Email)
+            && registerDTO.Password == PasswordAgainTrue
+            && EmailTrue.Text.Contains("@"))
         {
             var response = await _authClient.RegisterAsync(registerDTO);
 
@@ -34,7 +39,7 @@ public partial class Register : ContentPage
             }
             else
             {
-                await DisplayAlert("B³¹d", "Rejestracja siê nie powiod³a.", "OK");
+                await DisplayAlert("BÅ‚Ä…d", "Rejestracja siÄ™ nie powiodÅ‚a.", "OK");
             }
         }
     }
