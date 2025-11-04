@@ -31,17 +31,26 @@
             <Entry
                 x:Name="NickNameTrue"
                 MaxLength="20"
-                
                 Placeholder="Nickname"
                 BackgroundColor="White" 
-                TextColor="Black"/>
+                TextColor="Black"
+                WidthRequest="400"
+                HeightRequest="50"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                />
 
             <Entry
                 x:Name="EmailTrue"
                 MaxLength="50"
                 TextColor="Black"
                 Placeholder="Email"
-                BackgroundColor="White">
+                BackgroundColor="White"
+                WidthRequest="400"
+                HeightRequest="50"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                >
                 
                 <Entry.Behaviors>
                     <toolkit:TextValidationBehavior 
@@ -61,7 +70,12 @@
                 TextColor="Black"
                 Placeholder="Password"
                 IsPassword="True"
-                BackgroundColor="White" />
+                BackgroundColor="White"
+                WidthRequest="400"
+                HeightRequest="50"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                />
 
             
             <Entry
@@ -70,14 +84,22 @@
                 TextColor="Black"
                 Placeholder="Repeat password"
                 IsPassword="True"
-                BackgroundColor="White" />
+                BackgroundColor="White"
+                WidthRequest="400"
+                HeightRequest="50"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                />
 
             
             <Button
                 x:Name="RegisterButton"
                 Text="Register"
                 Clicked="RegisterFunction"
-                CornerRadius="20"/>
+                CornerRadius="20"
+                WidthRequest="100"
+                HeightRequest="50"
+                />
 
             <components:Components />
 

@@ -30,17 +30,21 @@
             TextColor="Black"
             WidthRequest="400"
             HeightRequest="50"
-            
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"
             />
 
         <Entry
             Background="White"
+            TextColor="Black"
             x:Name="IsPasswordTrue"
             MaxLength="20"
             Placeholder="Password"
             IsPassword="True"
             WidthRequest="400"
             HeightRequest="50"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center"
             
             />
         <Button

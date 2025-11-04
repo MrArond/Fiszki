@@ -31,7 +31,7 @@ public partial class Login : ContentPage
 
             if (response.IsSuccessStatusCode)
             {
-                await Shell.Current.GoToAsync(nameof(Test), true);
+                await Shell.Current.GoToAsync(nameof(HomePage), true);
             }
             else
             {

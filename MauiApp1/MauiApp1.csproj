@@ -71,11 +71,8 @@
 	  <Compile Update="Sites\Components.xaml.cs">
 	    <DependentUpon>Components.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Sites\Styles.xaml.cs">
-	    <DependentUpon>Styles.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Sites\Test.xaml.cs">
-	    <DependentUpon>Test.xaml</DependentUpon>
+	  <Compile Update="Sites\HomePage.xaml.cs">
+	    <DependentUpon>HomePage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Sites\Register.xaml.cs">
 	    <DependentUpon>Register.xaml</DependentUpon>
@@ -89,10 +86,7 @@
 	  <MauiXaml Update="Sites\Components.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Sites\Styles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Sites\Test.xaml">
+	  <MauiXaml Update="Sites\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Sites\Register.xaml">
