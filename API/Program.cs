@@ -17,12 +17,10 @@ namespace API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
+    
             builder.Services.AddDbContext<Datacontext>();
             builder.Services.AddScoped<JwtServices>();
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -50,9 +48,6 @@ namespace API
             });
             });
 
-            //builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
-            //    .AddNegotiate();
-
             var jwtSecret = builder.Configuration["JWT_SECRET"];
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -75,7 +70,6 @@ namespace API
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

@@ -12,7 +12,7 @@ namespace MauiApp1.Services
         public AuthClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("http://localhost:5008");
+            _httpClient.BaseAddress = new Uri("https://localhost:7037");
         }
 
         public async Task<HttpResponseMessage> RegisterAsync(RegisterDTO registerDto)

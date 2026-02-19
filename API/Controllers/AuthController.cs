@@ -15,13 +15,21 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("Register")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterDTO t)
         {
-            var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == t.Email);
-            if (d != null)
+            
+            var d = _datacontext.Users.FirstOrDefaultAsync(c => c.Email == t.Email);
+            var b = _datacontext.Users.FirstOrDefaultAsync(c => c.Nickname == t.NickName);
+
+            if (await d != null)
             {
-                return BadRequest();
+                return BadRequest("Konto o podanym mailu istnieje juz");
+            }
+            
+            if(await b != null)
+            {
+                return BadRequest("Konto o podanym nicknamie istnieje już");
             }
 
             User User = new User { Email = t.Email, Nickname = t.NickName, Password = t.Password };

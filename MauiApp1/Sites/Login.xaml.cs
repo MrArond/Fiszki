@@ -24,24 +24,25 @@ public partial class Login : ContentPage
 
 
 
-        if (!string.IsNullOrWhiteSpace(loginDTO.Email) && !string.IsNullOrWhiteSpace(loginDTO.Password))
+        if (!string.IsNullOrWhiteSpace(loginDTO.Email))
         {
-
-            var response = await _authClient.LoginAsync(loginDTO);
-
-            if (response.IsSuccessStatusCode)
+            if (!string.IsNullOrWhiteSpace(loginDTO.Password))
             {
-                await Shell.Current.GoToAsync(nameof(HomePage), true);
-            }
-            else
-            {
-                await DisplayAlert("Dane logowania", "Login lub has³o s¹ nieprawid³owe", "Wpisz jeszcze raz");
-            }
+                var response = await _authClient.LoginAsync(loginDTO);
 
+                if (response.IsSuccessStatusCode)
+                {
+                    await Shell.Current.GoToAsync(nameof(HomePage), true);
+                }
+                else
+                {
+                    await DisplayAlert("B³¹d", "Has³o lub mail nie prawidlowe", "Ok");
+                }
+            } 
         }
         else
         {
-            await DisplayAlert("Dane logowania", "Login lub has³o s¹ nieprawid³owe", "Wpisz jeszcze raz");
+            await DisplayAlert("B³¹d", "Nie podano maila", "Ok");
         }
     }
 
