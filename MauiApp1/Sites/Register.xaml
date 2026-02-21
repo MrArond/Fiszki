@@ -5,7 +5,6 @@
              x:Class="MauiApp1.Register"
              Title="Register">
 
-    
     <ScrollView>
         <VerticalStackLayout
             BackgroundColor="LightBlue"
@@ -25,20 +24,19 @@
                 Source="logo.png"
                 HeightRequest="250"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+                SemanticProperties.Description="app logo" />
 
-           
             <Entry
                 x:Name="NickNameTrue"
+                
                 MaxLength="20"
                 Placeholder="Nickname"
-                BackgroundColor="White" 
+                BackgroundColor="White"
                 TextColor="Black"
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
-                />
+                VerticalTextAlignment="Center" />
 
             <Entry
                 x:Name="EmailTrue"
@@ -49,21 +47,18 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
-                >
-                
+                VerticalTextAlignment="Center">
+
                 <Entry.Behaviors>
-                    <toolkit:TextValidationBehavior 
+                    <toolkit:TextValidationBehavior
                         x:Name="EmailValidator"
-                        RegexPattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" 
+                        RegexPattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
                         Flags="ValidateOnValueChanged"
                         InvalidStyle="{StaticResource InvalidEntryStyle}"
                         ValidStyle="{StaticResource ValidEntryStyle}" />
-
                 </Entry.Behaviors>
             </Entry>
 
-            
             <Entry
                 x:Name="PasswordTrue"
                 MaxLength="20"
@@ -74,10 +69,8 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
-                />
+                VerticalTextAlignment="Center" />
 
-            
             <Entry
                 x:Name="PasswordAgain"
                 MaxLength="20"
@@ -88,18 +81,42 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
-                />
+                VerticalTextAlignment="Center" />
 
-            
+            <Picker x:Name="SecretQuestionPicker"
+                BackgroundColor="White"
+                TextColor="Black"
+                WidthRequest="400"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                SelectedIndex="0">
+                <Picker.Items>
+                    <x:String>Select a secret question...</x:String>
+                    <x:String>What is your first pet name?</x:String>
+                    <x:String>What is your favorite city?</x:String>
+                    <x:String>What is your mother maiden name?</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Entry
+                x:Name="SecretAnswer"
+                MaxLength="50"
+                TextColor="Black"
+                Placeholder="Secret answer"
+                IsPassword="False"
+                BackgroundColor="White"
+                WidthRequest="400"
+                HeightRequest="50"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center" />
+
             <Button
                 x:Name="RegisterButton"
                 Text="Register"
                 Clicked="RegisterFunction"
                 CornerRadius="20"
-                WidthRequest="100"
-                HeightRequest="50"
-                />
+                WidthRequest="140"
+                HeightRequest="50" />
 
             <components:Components />
 

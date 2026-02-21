@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using API.DTOs;
 using MauiApp1.DTOs;
 
 namespace MauiApp1.Services
@@ -24,6 +25,11 @@ namespace MauiApp1.Services
         public async Task<HttpResponseMessage> LoginAsync(LoginDTO loginDto)
         {
             return await _httpClient.PostAsJsonAsync("/api/Auth/Login", loginDto);
+        }
+
+        public async Task<HttpResponseMessage> ForgotPasswordAsync(ForgotPasswordDTO forgotPasswordDTO)
+        {
+            return await _httpClient.PostAsJsonAsync("/api/Auth/ForgotPassword", forgotPasswordDTO);
         }
     }
 }

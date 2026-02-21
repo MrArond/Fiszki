@@ -10,8 +10,7 @@ namespace MauiApp1
 
             Routing.RegisterRoute(nameof(Login), typeof(Login));
             Routing.RegisterRoute(nameof(Register), typeof(Register));
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-            Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
+            Routing.RegisterRoute(nameof(ForgotPassword), typeof(ForgotPassword));
         }
     }
 }

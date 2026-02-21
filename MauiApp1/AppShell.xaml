@@ -3,12 +3,16 @@
     x:Class="MauiApp1.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sites="clr-namespace:MauiApp1.Sites"
     xmlns:local="clr-namespace:MauiApp1"
     Title="MauiApp1">
 
     <ShellContent
-        Title="Home"
+        Title="Main"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate sites:HomePage}"
+        Route="HomePage" />
 </Shell>

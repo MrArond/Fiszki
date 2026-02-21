@@ -20,7 +20,9 @@ public partial class Register : ContentPage
         {
             NickName = NickNameTrue.Text,
             Email = EmailTrue.Text,
-            Password = PasswordTrue.Text
+            Password = PasswordTrue.Text,
+            SecretPassword = SecretAnswer.Text,
+            IdOfSecretQuestion = SecretQuestionPicker.SelectedIndex
         };
 
         string PasswordAgainTrue = PasswordAgain.Text;
@@ -39,6 +41,11 @@ public partial class Register : ContentPage
             if(PasswordAgainTrue != registerDTO.Password)
             {
                 await DisplayAlert("Błąd", "Hasła nie są takie same", "Ok");
+                return;
+            }
+            if(registerDTO.IdOfSecretQuestion == 0)
+            {
+                await DisplayAlert("Błąd", "Prosze wybrac pytanie", "Ok");
                 return;
             }
             if (EmailTrue.Text.Contains("@"))

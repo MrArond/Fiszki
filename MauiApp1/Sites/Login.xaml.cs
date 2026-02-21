@@ -45,5 +45,9 @@ public partial class Login : ContentPage
             await DisplayAlert("B³¹d", "Nie podano maila", "Ok");
         }
     }
+    private async void OnForgotPasswordClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(ForgotPassword), true);
+    }
 
 }
