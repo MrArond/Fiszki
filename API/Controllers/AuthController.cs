@@ -61,7 +61,6 @@ namespace API.Controllers
             _datacontext.Users.Add(User);
             _datacontext.SaveChanges();
             return Ok(new { Message = "Device registered successfully" });
-
         }
 
         [HttpPost("Login")]
