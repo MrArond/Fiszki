@@ -75,23 +75,27 @@ namespace MauiApp1.ViewModels
 
                 if (string.IsNullOrWhiteSpace(Register.NickName))
                 {
-                    await Shell.Current.DisplayAlert("Błąd", "Nickname nie zostal podany", "Ok");
+                    await Shell.Current.DisplayAlert("Błąd", "Nickname wasnt provided", "Ok");
                     return;
                 }
                 if (string.IsNullOrWhiteSpace(Register.Email))
                 {
-                    await Shell.Current.DisplayAlert("Błąd", "Email nie został podany", "Ok");
+                    await Shell.Current.DisplayAlert("Błąd", "Email wasnt provided", "Ok");
                     return;
                 }
-
                 if (string.IsNullOrWhiteSpace(Register.Password))
                 {
-                    await Shell.Current.DisplayAlert("Błąd", "Hasło nie zostało podane", "Ok");
+                    await Shell.Current.DisplayAlert("Błąd", "Password wasnt provided", "Ok");
+                    return;
+                }
+                if(string.IsNullOrWhiteSpace(Register.Password) && Register.Password.Length < 5)
+                {
+                    await Shell.Current.DisplayAlert("Błąd", "Password must be at least 5 characters long", "Ok");
                     return;
                 }
                 if (RepeatPassword != Register.Password)
                 {
-                    await Shell.Current.DisplayAlert("Błąd", "Hasła nie są takie same", "Ok");
+                    await Shell.Current.DisplayAlert("Błąd", "Password doesnt match", "Ok");
                     return;
                 }
                 if (!MailAddress.TryCreate(Register.Email, out var mailResult))

@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MauiApp1.ViewModels"
+             x:DataType="viewmodels:MainPageViewModel"
              x:Class="MauiApp1.MainPage">
 
     <ScrollView>
@@ -16,30 +18,25 @@
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
             LineBreakMode="WordWrap"
-            Margin="0,20,0,20" />   
+            Margin="0,20,0,20" />
             <Image
                 Source="logo.png"
                 HeightRequest="250"
                 Aspect="AspectFit"
                 />
-
             <Button
-                x:Name="LoginBtn"
                 Text="Login" 
-                
-                Clicked="LoginButton"
-                WidthRequest="100"
-                HeightRequest="50"
-                HorizontalOptions="Fill"/>
-            <Button
-                x:Name="RegisterBtn"
-                Text="Register "
-                
-                Clicked="RegisterButton"
                 WidthRequest="100"
                 HeightRequest="50"
                 HorizontalOptions="Fill"
-                Margin="0,25,0,0"/>
+                Command="{Binding LoginCommand}"/>
+            <Button
+                Text="Register "
+                WidthRequest="100"
+                HeightRequest="50"
+                HorizontalOptions="Fill"
+                Margin="0,25,0,0"
+                Command="{Binding RegisterCommand}"/>
             
             
         </VerticalStackLayout>
