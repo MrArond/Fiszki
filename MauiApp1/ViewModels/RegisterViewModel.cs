@@ -28,7 +28,7 @@ namespace MauiApp1.ViewModels
 
         public RegisterDTO Register
         {
-            get { return _register; }
+            get => _register;
             set { _register = value;
                 OnPropertyChanged();
             }

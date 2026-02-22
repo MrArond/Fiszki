@@ -3,7 +3,7 @@
              xmlns:components="clr-namespace:MauiApp1.Sites"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:MauiApp1.ViewModels"
-             x:DataType="viewmodels:ForgotPasswordViewModel"
+             x:DataType="viewmodels:RegisterViewModel"
              x:Class="MauiApp1.Register"
              Title="Register">
 
