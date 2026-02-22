@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 
@@ -17,11 +18,29 @@ namespace API.Controllers
     {
         [HttpPost("Register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO t)
+        public async Task<IActionResult> Register([FromBody] RegisterDTO register)
         {
-            
-            var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == t.Email);
-            var b = await _datacontext.Users.FirstOrDefaultAsync(c => c.Nickname == t.NickName);
+
+            if (!MailAddress.TryCreate(register.Email, out var mailResult))
+            {
+                return BadRequest("Wrong format of the mail");
+            }
+            if(register.Password.Length < 5)
+            {
+                return BadRequest("Password must have atleast 5 characters");
+            }
+            if (string.IsNullOrWhiteSpace(register.NickName))
+            {
+                return BadRequest("Please provide nickname");
+            }
+            if (string.IsNullOrWhiteSpace(register.SecretPassword))
+            {
+                return BadRequest("Please provide secret password");
+            }
+
+
+            var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == register.Email);
+            var b = await _datacontext.Users.FirstOrDefaultAsync(c => c.Nickname == register.NickName);
 
             if (d != null)
             {
@@ -33,7 +52,12 @@ namespace API.Controllers
                 return BadRequest("Konto o podanym nicknamie istnieje już");
             }
 
-            User User = new User { Email = t.Email, Nickname = t.NickName, Password = t.Password, SecretPassword = t.SecretPassword, IdOfSecretQuestion = t.IdOfSecretQuestion };
+            User User = new User { Email = register.Email, 
+                Nickname = register.NickName, 
+                Password = register.Password, 
+                SecretPassword = register.SecretPassword, 
+                IdOfSecretQuestion = register.IdOfSecretQuestion };
+
             _datacontext.Users.Add(User);
             _datacontext.SaveChanges();
             return Ok(new { Message = "Device registered successfully" });
@@ -42,9 +66,21 @@ namespace API.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginDTO t)
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
-            var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == t.Email && c.Password == t.Password);
+
+            if (string.IsNullOrWhiteSpace(login.Email))
+            {
+                return BadRequest("Please provide email");
+            }
+            if (string.IsNullOrWhiteSpace(login.Password))
+            {
+                return BadRequest("Please provide password");
+            }
+
+            var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == login.Email 
+            && c.Password == login.Password);
+
             if (user == null)
             {
                 return BadRequest(new { Message = "Invalid Login or Password" });
@@ -68,7 +104,36 @@ namespace API.Controllers
 
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO forgotPassword)
            {
-                var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == forgotPassword.Email && c.IdOfSecretQuestion == forgotPassword.IdOfSecretQuestion && c.SecretPassword == forgotPassword.SecretPassword);
+            if (string.IsNullOrWhiteSpace(forgotPassword.Email))
+            {
+                return BadRequest("Please provide mail");
+
+            }
+            if (string.IsNullOrWhiteSpace(forgotPassword.Password))
+            {
+                return BadRequest("Please provide password");
+
+            }
+            if (forgotPassword.Password.Length < 5)
+            {
+                return BadRequest("Password must have atleast 5 characters");
+
+            }
+            if (!MailAddress.TryCreate(forgotPassword.Email, out var mailResult))
+            {
+                return BadRequest("Please type the correct format of mail");
+
+            }
+            if (string.IsNullOrWhiteSpace(forgotPassword.SecretPassword))
+            {
+                return BadRequest("Please provide the secret answer");
+            }
+
+            var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == forgotPassword.Email 
+                && c.IdOfSecretQuestion == forgotPassword.IdOfSecretQuestion 
+                && c.SecretPassword == forgotPassword.SecretPassword);
+
+
                 if(user == null)
                 {
                     return BadRequest("Podano zly secret haslo");
