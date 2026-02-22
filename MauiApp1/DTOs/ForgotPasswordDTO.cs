@@ -2,12 +2,12 @@
 {
     public class ForgotPasswordDTO
     {
-        public required string Email { get; set; }
+        public string? Email { get; set; }
 
-        public required int IdOfSecretQuestion { get; set; }
+        public int IdOfSecretQuestion { get; set; }
 
-        public required string SecretPassword { get; set; }
+        public string? SecretPassword { get; set; }
 
-        public required string Password { get; set; }
+        public string? Password { get; set; }
     }
 }

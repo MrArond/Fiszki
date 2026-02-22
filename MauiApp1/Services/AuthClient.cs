@@ -31,6 +31,7 @@ namespace MauiApp1.Services
         {
             return await _httpClient.PostAsJsonAsync("/api/Auth/ForgotPassword", forgotPasswordDTO);
         }
+
     }
 }
 

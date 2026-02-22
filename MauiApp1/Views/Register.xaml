@@ -2,6 +2,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:components="clr-namespace:MauiApp1.Sites"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MauiApp1.ViewModels"
+             x:DataType="viewmodels:ForgotPasswordViewModel"
              x:Class="MauiApp1.Register"
              Title="Register">
 
@@ -27,8 +29,7 @@
                 SemanticProperties.Description="app logo" />
 
             <Entry
-                x:Name="NickNameTrue"
-                
+                Text="{Binding Register.NickName}"
                 MaxLength="20"
                 Placeholder="Nickname"
                 BackgroundColor="White"
@@ -39,7 +40,6 @@
                 VerticalTextAlignment="Center" />
 
             <Entry
-                x:Name="EmailTrue"
                 MaxLength="50"
                 TextColor="Black"
                 Placeholder="Email"
@@ -47,20 +47,12 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center">
-
-                <Entry.Behaviors>
-                    <toolkit:TextValidationBehavior
-                        x:Name="EmailValidator"
-                        RegexPattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
-                        Flags="ValidateOnValueChanged"
-                        InvalidStyle="{StaticResource InvalidEntryStyle}"
-                        ValidStyle="{StaticResource ValidEntryStyle}" />
-                </Entry.Behaviors>
+                VerticalTextAlignment="Center"
+                Text="{Binding Register.Email}">
+                
             </Entry>
 
             <Entry
-                x:Name="PasswordTrue"
                 MaxLength="20"
                 TextColor="Black"
                 Placeholder="Password"
@@ -69,10 +61,10 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center" />
+                VerticalTextAlignment="Center" 
+                Text="{Binding Register.Password}"/>
 
             <Entry
-                x:Name="PasswordAgain"
                 MaxLength="20"
                 TextColor="Black"
                 Placeholder="Repeat password"
@@ -81,17 +73,17 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center" />
+                VerticalTextAlignment="Center"
+                Text="{Binding RepeatPassword}"/>
 
-            <Picker x:Name="SecretQuestionPicker"
+            <Picker
                 BackgroundColor="White"
                 TextColor="Black"
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalOptions="Center"
-                SelectedIndex="0">
+                SelectedIndex="{Binding Register.IdOfSecretQuestion}">
                 <Picker.Items>
-                    <x:String>Select a secret question...</x:String>
                     <x:String>What is your first pet name?</x:String>
                     <x:String>What is your favorite city?</x:String>
                     <x:String>What is your mother maiden name?</x:String>
@@ -99,7 +91,6 @@
             </Picker>
 
             <Entry
-                x:Name="SecretAnswer"
                 MaxLength="50"
                 TextColor="Black"
                 Placeholder="Secret answer"
@@ -108,15 +99,15 @@
                 WidthRequest="400"
                 HeightRequest="50"
                 HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center" />
+                VerticalTextAlignment="Center"
+                Text="{Binding Register.SecretPassword}"/>
 
             <Button
-                x:Name="RegisterButton"
                 Text="Register"
-                Clicked="RegisterFunction"
                 CornerRadius="20"
                 WidthRequest="140"
-                HeightRequest="50" />
+                HeightRequest="50"
+                Command="{Binding RegisterCommand}"/>
 
             <components:Components />
 

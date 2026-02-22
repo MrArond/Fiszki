@@ -68,34 +68,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Sites\Components.xaml.cs">
+	  <Compile Update="Models\Components.xaml.cs">
 	    <DependentUpon>Components.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Sites\HomePage.xaml.cs">
+	  <Compile Update="Models\HomePage.xaml.cs">
 	    <DependentUpon>HomePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Sites\Register.xaml.cs">
+	  <Compile Update="Models\Register.xaml.cs">
 	    <DependentUpon>Register.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Sites\Login.xaml.cs">
+	  <Compile Update="Models\Login.xaml.cs">
 	    <DependentUpon>Login.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Sites\Components.xaml">
+	  <MauiXaml Update="Views\Components.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Sites\ForgotPassword.xaml">
+	  <MauiXaml Update="Views\ForgotPassword.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Sites\HomePage.xaml">
+	  <MauiXaml Update="Views\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Sites\Register.xaml">
+	  <MauiXaml Update="Views\Register.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Sites\Login.xaml">
+	  <MauiXaml Update="Views\Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
