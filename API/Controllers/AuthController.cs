@@ -21,36 +21,8 @@ namespace API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDTO register)
         {
 
-            if (!MailAddress.TryCreate(register.Email, out var mailResult))
-            {
-                return BadRequest("Wrong format of the mail");
-            }
-            if(register.Password.Length < 5)
-            {
-                return BadRequest("Password must have atleast 5 characters");
-            }
-            if (string.IsNullOrWhiteSpace(register.NickName))
-            {
-                return BadRequest("Please provide nickname");
-            }
-            if (string.IsNullOrWhiteSpace(register.SecretPassword))
-            {
-                return BadRequest("Please provide secret password");
-            }
-
-
             var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email.ToLower() == register.Email);
-            var b = await _datacontext.Users.FirstOrDefaultAsync(c => c.Nickname == register.NickName);
-
-            if (d != null)
-            {
-                return BadRequest("Konto o podanym mailu istnieje juz");
-            }
             
-            if(b != null)
-            {
-                return BadRequest("Konto o podanym nicknamie istnieje już");
-            }
 
             User User = new User { Email = register.Email.ToLower(), 
                 Nickname = register.NickName, 
@@ -68,14 +40,7 @@ namespace API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
 
-            if (string.IsNullOrWhiteSpace(login.Email))
-            {
-                return BadRequest("Please provide email");
-            }
-            if (string.IsNullOrWhiteSpace(login.Password))
-            {
-                return BadRequest("Please provide password");
-            }
+
 
             var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email.ToLower() == login.Email.ToLower() 
             && c.Password == login.Password);
