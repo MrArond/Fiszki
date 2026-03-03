@@ -39,7 +39,7 @@ namespace API.Controllers
             }
 
 
-            var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == register.Email);
+            var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email.ToLower() == register.Email);
             var b = await _datacontext.Users.FirstOrDefaultAsync(c => c.Nickname == register.NickName);
 
             if (d != null)
@@ -52,7 +52,7 @@ namespace API.Controllers
                 return BadRequest("Konto o podanym nicknamie istnieje już");
             }
 
-            User User = new User { Email = register.Email, 
+            User User = new User { Email = register.Email.ToLower(), 
                 Nickname = register.NickName, 
                 Password = register.Password, 
                 SecretPassword = register.SecretPassword, 
@@ -77,7 +77,7 @@ namespace API.Controllers
                 return BadRequest("Please provide password");
             }
 
-            var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email == login.Email 
+            var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email.ToLower() == login.Email.ToLower() 
             && c.Password == login.Password);
 
             if (user == null)
@@ -89,7 +89,7 @@ namespace API.Controllers
                 var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Sub, user.Nickname!),
-                new(JwtRegisteredClaimNames.Email, user.Email!),
+                new(JwtRegisteredClaimNames.Email, user.Email.ToLower()!),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
                 var token = _jwtService.GenerateJwtToken(claims);
@@ -103,7 +103,7 @@ namespace API.Controllers
 
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO forgotPassword)
            {
-            if (string.IsNullOrWhiteSpace(forgotPassword.Email))
+            if (string.IsNullOrWhiteSpace(forgotPassword.Email.ToLower()))
             {
                 return BadRequest("Please provide mail");
 
@@ -118,7 +118,7 @@ namespace API.Controllers
                 return BadRequest("Password must have atleast 5 characters");
 
             }
-            if (!MailAddress.TryCreate(forgotPassword.Email, out var mailResult))
+            if (!MailAddress.TryCreate(forgotPassword.Email.ToLower(), out var mailResult))
             {
                 return BadRequest("Please type the correct format of mail");
 

@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Sites.HomePage"
              Title="HomePage">
+    <ScrollView>
     <Grid RowDefinitions="9.0*, auto,  1*">
         <VerticalStackLayout
         Grid.Row="0"
-                BackgroundColor="LightBlue"
+                BackgroundColor="{DynamicResource PrimaryColor}"
                 Padding="25"
                 Spacing="25">
 
@@ -27,12 +28,12 @@
             />
         <VerticalStackLayout
             Grid.Row="2"
-            Background="LightBlue"
+            Background="{DynamicResource PrimaryColor}"
             Padding="25"
             Spacing="25"
             >
 
         </VerticalStackLayout>
     </Grid>
-
+    </ScrollView>
 </ContentPage>

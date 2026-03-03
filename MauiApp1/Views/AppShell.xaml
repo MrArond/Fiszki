@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
+    <Shell
     x:Class="MauiApp1.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:sites="clr-namespace:MauiApp1.Sites"
     xmlns:local="clr-namespace:MauiApp1"
-    FlyoutBackground="Black"
+    FlyoutBackground="{DynamicResource SecondPrimaryColor}"
+    Shell.NavBarIsVisible="False"
     Title="MauiApp1">
 
     <Shell.ItemTemplate>
@@ -16,11 +17,11 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="{Binding FlyoutIcon}" 
-                       Margin="10"
-                       HeightRequest="30"
-                       WidthRequest="30"
-                       />
-                
+                   Margin="10"
+                   HeightRequest="30"
+                   WidthRequest="30"
+                   />
+
                 <Label Grid.Column="1" 
                        Text="{Binding Title}"
                        VerticalOptions="Center"
@@ -31,8 +32,15 @@
     </Shell.ItemTemplate>
 
     <Shell.FlyoutHeader>
-        <Grid HeightRequest="100" BackgroundColor="LightBlue">
-            <Label Text="test"/>
+        <Grid HeightRequest="200" BackgroundColor="{DynamicResource PrimaryColor}">
+            <Label
+                Text="FishSticks"
+                HorizontalTextAlignment="Center"
+                FontSize="25"
+                />
+            <Image Source="logo.png"
+                   WidthRequest="100"
+                   HeightRequest="200"/>
         </Grid>
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Listy" Icon="add.png">
@@ -48,8 +56,9 @@
         Route="HomePage" />
     </FlyoutItem>
     <Shell.FlyoutFooter>
-        <Grid HeightRequest="100" BackgroundColor="LightBlue">
+        <Grid HeightRequest="100" BackgroundColor="{DynamicResource PrimaryColor}">
             <Button
+                
                 Text="Log Out"
                 WidthRequest="200"
                 HeightRequest="50"

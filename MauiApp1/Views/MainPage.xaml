@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:MauiApp1.ViewModels"
              x:DataType="viewmodels:MainPageViewModel"
+             Shell.FlyoutBehavior="Disabled"
              x:Class="MauiApp1.MainPage">
 
     <ScrollView>
         <VerticalStackLayout
-            BackgroundColor="LightBlue"
+            BackgroundColor="{DynamicResource PrimaryColor}"
             Padding="30,0"
             Spacing="25">
 
@@ -18,7 +19,7 @@
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
             LineBreakMode="WordWrap"
-            Margin="0,20,0,20" />
+            Margin="0,100,0,20" />
             <Image
                 Source="logo.png"
                 HeightRequest="250"
@@ -29,16 +30,15 @@
                 WidthRequest="100"
                 HeightRequest="50"
                 HorizontalOptions="Fill"
+                Margin="0,100,0,25"
                 Command="{Binding LoginCommand}"/>
             <Button
                 Text="Register "
                 WidthRequest="100"
                 HeightRequest="50"
                 HorizontalOptions="Fill"
-                Margin="0,25,0,0"
+                Margin="0,0,0,0"
                 Command="{Binding RegisterCommand}"/>
-            
-            
         </VerticalStackLayout>
     </ScrollView>
 

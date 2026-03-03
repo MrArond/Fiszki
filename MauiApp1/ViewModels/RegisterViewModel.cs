@@ -111,7 +111,7 @@ namespace MauiApp1.ViewModels
                     var dto = new RegisterDTO
                     {
                         NickName = Register.NickName,
-                        Email = Register.Email,
+                        Email = Register.Email.ToLower(),
                         Password = Register.Password,
                         IdOfSecretQuestion = Register.IdOfSecretQuestion,
                         SecretPassword = Register.SecretPassword

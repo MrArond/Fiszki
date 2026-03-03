@@ -9,7 +9,7 @@
 
     <ScrollView>
         <VerticalStackLayout
-            BackgroundColor="LightBlue"
+            BackgroundColor="{DynamicResource PrimaryColor}"
             Padding="30,0"
             Spacing="25">
 

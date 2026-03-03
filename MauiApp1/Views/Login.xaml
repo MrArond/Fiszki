@@ -5,10 +5,12 @@
              xmlns:viewmodels="clr-namespace:MauiApp1.ViewModels"
              x:DataType="viewmodels:LoginViewModel"
              x:Class="MauiApp1.Login"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False"
              Title="Login">
-
-    <VerticalStackLayout
-        BackgroundColor="LightBlue"
+<ScrollView>
+        <VerticalStackLayout
+        BackgroundColor="{DynamicResource PrimaryColor}"
         Padding="25"
         Spacing="25">
         <Label 
@@ -20,15 +22,17 @@
         LineBreakMode="WordWrap"
         Margin="0,20,0,20" />
         <Image
+                Margin="0,100,0,0"
                 Source="../logo.png"
-                HeightRequest="150"
-                WidthRequest="100"
+                HeightRequest="200"
+                WidthRequest="300"
                 HorizontalOptions="Center"
                 Aspect="AspectFit"
                 />
         <Entry 
+            Margin="0,25,0,25"
             Background="White"
-            MaxLength="20"
+            MaxLength="25"
             Placeholder="Email"
             TextColor="Black"
             WidthRequest="400"
@@ -51,6 +55,7 @@
             Text="{Binding Login.Password}"
             />
         <Button
+            Margin="0,25,0,0"
             x:Name="ForgotPassword"
             Text="Forgot Password"
             CornerRadius="20"
@@ -69,4 +74,5 @@
         <components:Components
             />
     </VerticalStackLayout>
+</ScrollView>
 </ContentPage>
