@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiApp1.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sites="clr-namespace:MauiApp1.Sites"
+    xmlns:local="clr-namespace:MauiApp1"
+    FlyoutBackground="Black"
+    Title="MauiApp1">
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding FlyoutIcon}" 
+                       Margin="10"
+                       HeightRequest="30"
+                       WidthRequest="30"
+                       />
+                
+                <Label Grid.Column="1" 
+                       Text="{Binding Title}"
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="White"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="100" BackgroundColor="LightBlue">
+            <Label Text="test"/>
+        </Grid>
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="Listy" Icon="add.png">
+        <ShellContent
+            Title="Main"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Dodanie" Icon="delete.png">
+        <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate sites:HomePage}"
+        Route="HomePage" />
+    </FlyoutItem>
+    <Shell.FlyoutFooter>
+        <Grid HeightRequest="100" BackgroundColor="LightBlue">
+            <Button
+                Text="Log Out"
+                WidthRequest="200"
+                HeightRequest="50"
+                CornerRadius="20"
+                Command="{Binding LogOutCommand}"
+                />
+        </Grid>
+    </Shell.FlyoutFooter >
+</Shell>
