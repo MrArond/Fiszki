@@ -5,14 +5,51 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:sites="clr-namespace:MauiApp1.Sites"
     xmlns:local="clr-namespace:MauiApp1"
+    FlyoutBackground="Black"
     Title="MauiApp1">
 
-    <ShellContent
-        Title="Main"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    <ShellContent
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding FlyoutIcon}" 
+                       Margin="10"
+                       HeightRequest="30"
+                       WidthRequest="30"
+                       />
+                
+                <Label Grid.Column="1" 
+                       Text="{Binding Title}"
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="Black"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="200" BackgroundColor="Blue">
+            <Label Text="test"/>
+        </Grid>
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="Listy" Icon="add.png">
+        <ShellContent
+            Title="Main"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Dodanie" Icon="delete.png">
+        <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate sites:HomePage}"
         Route="HomePage" />
+    </FlyoutItem>
+    <Shell.FlyoutFooter>
+        <Grid HeightRequest="100" BackgroundColor="Green">
+            <Label Text="test"/>
+        </Grid>
+    </Shell.FlyoutFooter >
 </Shell>

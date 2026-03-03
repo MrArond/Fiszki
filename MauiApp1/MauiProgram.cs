@@ -25,6 +25,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddHttpClient<AuthClient>();
+        builder.Services.AddTransient<Login>();
 
         return builder.Build();
     }
