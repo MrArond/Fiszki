@@ -1,5 +1,9 @@
 using API.DATA.Context;
+using API.Repositories.Implementation;
+using API.Repositories.Interfaces;
 using API.Services;
+using API.Services.Implementations;
+using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.DataProtection;
@@ -17,7 +21,11 @@ namespace API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-    
+
+            builder.Services.AddTransient<IForgotService, ForgotService>();
+            builder.Services.AddTransient<IAuthService, AuthService>();
+            builder.Services.AddTransient<IForgotRepository, ForgotRepository>();
+            builder.Services.AddTransient<IAuthRepository, AuthRepository>();
             builder.Services.AddDbContext<Datacontext>();
             builder.Services.AddScoped<JwtServices>();
             builder.Services.AddControllers();

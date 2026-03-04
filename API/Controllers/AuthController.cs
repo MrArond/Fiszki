@@ -23,16 +23,15 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterDTO register)
         {
-           var wynik = await _authService.Register(register);
-            return Ok(wynik);
+            return Ok(await _authService.Register(register));
         }
         
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
-            var user = await _authService.Login(login);
-            return Ok(user);
+
+            return Ok(await _authService.Login(login));
             
         }
         public AuthController(IAuthService authService)

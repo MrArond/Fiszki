@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 namespace API.Repositories.Implementation
 {
-    public class AuthReposity(Datacontext _datacontext) : IAuthRepository
+    public class AuthRepository(Datacontext _datacontext) : IAuthRepository
     {
         public async Task<User?> GetByEmail(string email, string nickname)
             => await _datacontext.Users.FirstOrDefaultAsync(c => 

@@ -10,9 +10,14 @@ namespace API.Controllers
 {
     public class ForgotPasswordController : ControllerBase
     {
+        public ForgotPasswordController(IForgotService forgotService)
+        {
+            _forgotService = forgotService;
+        }
+
         [HttpPut("ForgotPassword")]
         [AllowAnonymous]
-
+       
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO forgotPassword)
         {
             var result = await _forgotService.ForgotPassword(forgotPassword);
@@ -20,9 +25,6 @@ namespace API.Controllers
         }
         private readonly IForgotService _forgotService;
 
-        public ForgotPasswordController(IForgotService forgotService)
-        {
-            _forgotService = forgotService;
-        }
+        
     }
 }
