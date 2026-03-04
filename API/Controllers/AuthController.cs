@@ -1,12 +1,15 @@
 ﻿using API.DATA.Context;
 using API.DATA.Models;
 using API.DTOs;
+using API.Repositories.Interfaces;
 using API.Services;
+using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 
@@ -20,54 +23,24 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterDTO register)
         {
-
-            var d = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email.ToLower() == register.Email);
-            
-
-            User User = new User { Email = register.Email.ToLower(), 
-                Nickname = register.NickName, 
-                Password = register.Password, 
-                SecretPassword = register.SecretPassword, 
-                IdOfSecretQuestion = register.IdOfSecretQuestion };
-
-            _datacontext.Users.Add(User);
-            _datacontext.SaveChanges();
-            return Ok(new { Message = "Device registered successfully" });
+           var wynik = await _authService.Register(register);
+            return Ok(wynik);
         }
-
+        
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
-
-
-
-            var user = await _datacontext.Users.FirstOrDefaultAsync(c => c.Email.ToLower() == login.Email.ToLower() 
-            && c.Password == login.Password);
-
-            if (user == null)
-            {
-                return BadRequest(new { Message = "Invalid Login or Password" });
-            }
-            else
-            {
-                var claims = new List<Claim>
-            {
-                new(JwtRegisteredClaimNames.Sub, user.Nickname!),
-                new(JwtRegisteredClaimNames.Email, user.Email.ToLower()!),
-                new(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
-                var token = _jwtService.GenerateJwtToken(claims);
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
-            }
+            var user = await _authService.Login(login);
+            return Ok(user);
+            
         }
-        private readonly Datacontext _datacontext;
-        public AuthController(Datacontext e, JwtServices jwtService)
+        public AuthController(IAuthService authService)
         {
-            _datacontext = e;
-            _jwtService = jwtService;
+            _authService = authService;
         }
-        private readonly JwtServices _jwtService;
+        private readonly IAuthService _authService;
+
 
 
 
