@@ -5,13 +5,13 @@
              Title="HomePage">
     <ScrollView>
     <Grid RowDefinitions="9.0*, auto,  1*">
-        <VerticalStackLayout
+            <VerticalStackLayout
         Grid.Row="0"
                 BackgroundColor="{DynamicResource PrimaryColor}"
                 Padding="25"
                 Spacing="25">
 
-        <Label
+                <Label
                         FontSize="32"
                         FontAttributes="Bold"
                         HorizontalOptions="Center"
@@ -19,21 +19,7 @@
                         LineBreakMode="WordWrap"
                         Margin="0,20,0,20"
                         />
-        </VerticalStackLayout>
-
-        <BoxView Grid.Row="1"
-                     HeightRequest="1"
-                     BackgroundColor="Black"
-                     HorizontalOptions="Fill"
-            />
-        <VerticalStackLayout
-            Grid.Row="2"
-            Background="{DynamicResource PrimaryColor}"
-            Padding="25"
-            Spacing="25"
-            >
-
-        </VerticalStackLayout>
-    </Grid>
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>

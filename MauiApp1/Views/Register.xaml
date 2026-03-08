@@ -5,6 +5,7 @@
              xmlns:viewmodels="clr-namespace:MauiApp1.ViewModels"
              x:DataType="viewmodels:RegisterViewModel"
              x:Class="MauiApp1.Register"
+             Shell.FlyoutBehavior="Disabled"
              Title="Register">
 
     <ScrollView>

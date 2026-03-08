@@ -43,18 +43,30 @@
                    HeightRequest="200"/>
         </Grid>
     </Shell.FlyoutHeader>
-    <FlyoutItem Title="Listy" Icon="add.png">
+    <FlyoutItem Title="Listy" FlyoutItemIsVisible="False" Icon="add.png">
         <ShellContent
             Title="Main"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
     </FlyoutItem>
-    <FlyoutItem Title="Dodanie" Icon="delete.png">
+    <FlyoutItem Title="HomePage" Icon="home.png">
         <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate sites:HomePage}"
         Route="HomePage" />
     </FlyoutItem>
+
+    <FlyoutItem Title="Add Flash Card List" Icon="add.png">
+        <ShellContent
+            
+            Title="AddFlashCardList"
+            ContentTemplate="{DataTemplate sites:AddFlashCardsList}"
+            Route="AddFlashCardsList">
+            
+        </ShellContent>
+    
+    </FlyoutItem>
+
     <Shell.FlyoutFooter>
         <Grid HeightRequest="100" BackgroundColor="{DynamicResource PrimaryColor}">
             <Button
