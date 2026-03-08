@@ -11,14 +11,16 @@
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
             <Border IsVisible="{Binding IsFormVisible}"
+                   WidthRequest="300"
+                   HeightRequest="200"
                    Padding="15"
                    Margin="20"
                    VerticalOptions="Center"
                    HorizontalOptions="Center">
                 <VerticalStackLayout Spacing="10">
-                    <Entry Placeholder="Enter text"/>
-                    <Entry Placeholder="Enter text"/>
-                    <Entry Placeholder="Enter text"/>
+                    <Entry Placeholder="Name of list" Text="{Binding ListCard.Name}"/>
+                    <Entry Placeholder="description" Text="{Binding ListCard.Desciption }"/>
+                    <Button Text="Save" Command="{Binding SaveCommand}" WidthRequest ="150"/>
                 </VerticalStackLayout>
                 
             </Border>
