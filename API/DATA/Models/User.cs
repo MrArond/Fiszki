@@ -9,6 +9,8 @@ namespace API.DATA.Models
         [Key]
         public int Id { get; set; }
 
+        public ICollection<FlashCardsLists>? FlashCardsLists { get; set; }
+
         public required string Nickname { get; set; }
 
         public required string Email { get; set; }
