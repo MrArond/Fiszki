@@ -12,6 +12,5 @@ namespace API.DATA.Models
 
         public int Name { get; set; }
 
-        public int UserId { get; set; }
     }
 }
