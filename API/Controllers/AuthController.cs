@@ -31,7 +31,7 @@ namespace API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
 
-            return Ok(await _authService.Login(login));
+            return Ok((await _authService.Login(login)).Item2);
             
         }
         public AuthController(IAuthService authService)

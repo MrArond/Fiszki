@@ -1,12 +1,13 @@
+using MauiApp1.Services;
 using MauiApp1.ViewModels;
 
 namespace MauiApp1.Sites;
 
 public partial class AddFlashCardsList : ContentPage
 {
-	public AddFlashCardsList()
+	public AddFlashCardsList(AuthClient authClient)
 	{
 		InitializeComponent();
-		BindingContext = new AddFlashCardsListViewModel();
+		BindingContext = new AddFlashCardsListViewModel(authClient);
 	}
 }

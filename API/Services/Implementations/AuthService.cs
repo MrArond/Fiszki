@@ -39,13 +39,15 @@ namespace API.Services.Implementations
                 else
                 {
                     var claims = new List<Claim>
-            {
-                new(JwtRegisteredClaimNames.Sub, user.Nickname!),
-                new(JwtRegisteredClaimNames.Email, user.Email.ToLower()!),
-                new(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
+                    {
+                        new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                        new(JwtRegisteredClaimNames.Email, user.Email.ToLower()!),
+                        new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new(ClaimTypes.Name, user.Nickname!)
+                    };
                     var token = _jwtServices.GenerateJwtToken(claims);
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);  
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
                     return (true, tokenString);
                 }
             }

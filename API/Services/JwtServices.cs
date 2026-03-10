@@ -17,15 +17,20 @@ namespace API.Services
         {
             
             var jwtSecret = _configuration["JWT_SECRET"];
+            if (string.IsNullOrEmpty(jwtSecret))
+            {
+                throw new InvalidOperationException("JWT_SECRET is not configured");
+            }
 
-            var signingKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtSecret));
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
+            var now = DateTime.UtcNow;
 
             return new JwtSecurityToken(
                 issuer: _configuration["Authentication:ValidIssuer"],
                 audience: _configuration["Authentication:ValidAudience"],
-                expires: DateTime.UtcNow.AddHours(3),
                 claims: claims,
+                notBefore: now,
+                expires: now.AddHours(3),
                 signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             );
         }

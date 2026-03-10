@@ -6,6 +6,5 @@
 
         public required string Password { get; set; }
 
-        public int ID { get; set; }
     }
 }

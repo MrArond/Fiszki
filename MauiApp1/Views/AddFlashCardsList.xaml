@@ -19,7 +19,7 @@
                    HorizontalOptions="Center">
                 <VerticalStackLayout Spacing="10">
                     <Entry Placeholder="Name of list" Text="{Binding ListCard.Name}"/>
-                    <Entry Placeholder="description" Text="{Binding ListCard.Desciption }"/>
+                    <Entry Placeholder="description" Text="{Binding ListCard.Description }"/>
                     <Button Text="Save" Command="{Binding SaveCommand}" WidthRequest ="150"/>
                 </VerticalStackLayout>
                 

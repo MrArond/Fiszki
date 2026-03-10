@@ -77,9 +77,11 @@ namespace MauiApp1.ViewModels
                 };
 
                 var response = await _AuthClient.LoginAsync(loginDto);
+                var token = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
+                    await SecureStorage.SetAsync("auth_token", token);
                     await Shell.Current.GoToAsync("//HomePage", true);
                 }
                 else

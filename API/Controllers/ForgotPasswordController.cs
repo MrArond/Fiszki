@@ -8,6 +8,8 @@ using System.Net.Mail;
 
 namespace API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class ForgotPasswordController : ControllerBase
     {
         public ForgotPasswordController(IForgotService forgotService)

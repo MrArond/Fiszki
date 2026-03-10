@@ -5,10 +5,7 @@ using API.Services;
 using API.Services.Implementations;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.Negotiate;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -22,14 +19,22 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Rejestracja serwisów
             builder.Services.AddTransient<IForgotService, ForgotService>();
             builder.Services.AddTransient<IAuthService, AuthService>();
+            builder.Services.AddTransient<IAddCardsListService, AddCardsListService>();
             builder.Services.AddTransient<IForgotRepository, ForgotRepository>();
             builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+            builder.Services.AddTransient<IAddCardsListRepository, AddCardsListRepository>();
             builder.Services.AddDbContext<Datacontext>();
+            
+            // JwtServices generuje tokeny - musi u¿ywaæ TEGO SAMEGO klucza co validacja
             builder.Services.AddScoped<JwtServices>();
+            
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+            
+            // Swagger z JWT
             builder.Services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -41,40 +46,47 @@ namespace API
                     BearerFormat = "JWT"
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
                 {
-                    new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference
+                        new OpenApiSecurityScheme
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    Array.Empty<string>()
-                }
-            });
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
+            // ===== JWT CONFIGURATION =====
             var jwtSecret = builder.Configuration["JWT_SECRET"];
+            if (string.IsNullOrEmpty(jwtSecret))
+            {
+                throw new InvalidOperationException("JWT_SECRET is not configured");
+            }
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                .AddJwtBearer(options =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero,
-                    ValidIssuer = builder.Configuration["Authentication:ValidIssuer"],
-                    ValidAudience = builder.Configuration["Authentication:ValidAudience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidIssuer = builder.Configuration["Authentication:ValidIssuer"],
+                        ValidAudience = builder.Configuration["Authentication:ValidAudience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+                    };
                 });
 
-            builder.Services.AddAuthorization(options =>
-            {
-                options.FallbackPolicy = options.DefaultPolicy;
-            });
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -85,44 +97,14 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
+            
+            // KOLEJNOŒÆ MA ZNACZENIE!
+            app.UseAuthentication();  // 1. Sprawdza token
+            app.UseAuthorization();   // 2. Sprawdza uprawnienia
 
             app.MapControllers();
 
             app.Run();
         }
-        private static WebApplicationBuilder AddJwtService(WebApplicationBuilder builder)
-        {
-            var jwtSecret = builder.Configuration["JWT_SECRET"];
-            if(jwtSecret == null)
-                return builder;
-
-            builder.Services.AddAuthorization();
-
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = builder.Configuration["Authentication:ValidAudience"],
-                    ValidIssuer = builder.Configuration["Authentication:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-                };
-            });
-
-
-            return builder;   
-        }
-        
     }
 }

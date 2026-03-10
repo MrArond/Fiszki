@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using MauiApp1.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,8 +13,9 @@ namespace MauiApp1.ViewModels
 {
     internal class AddFlashCardsListViewModel : INotifyPropertyChanged
     {
-        public AddFlashCardsListViewModel()
+        public AddFlashCardsListViewModel(AuthClient authClient)
         {
+            _AuthClient = authClient;
             ToggleFormCommand = new Command(async () => await ToggleForm(), () => !IsBusy);
             SaveCommand = new Command(async () => await AddList(), () => !IsBusy);
         }
@@ -31,8 +33,17 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        private AddCardsListDTO AddCardList = new AddCardsListDTO();
+        private AddCardsListDTO _AddCardList = new AddCardsListDTO();
 
+        public AddCardsListDTO ListCard
+        {
+            get => _AddCardList;
+            set
+            {
+                _AddCardList = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         private bool _isFormVisible;
@@ -54,9 +65,29 @@ namespace MauiApp1.ViewModels
         }
         private async Task AddList()
         {
-            if (ListCard.name)
+            if (String.IsNullOrWhiteSpace(ListCard.Name))
             {
+                await Shell.Current.DisplayAlert("Error", "Please enter a name for the list.", "OK");
+            }
+            if (String.IsNullOrWhiteSpace(ListCard.Name))
+            {
+                await Shell.Current.DisplayAlert("Error", "Please provide description.", "OK");
+            }
+            var AddCardListDTO = new AddCardsListDTO
+            {
+                Name = ListCard.Name,
+                Description = ListCard.Description
+            };
+            var token = await SecureStorage.GetAsync("auth_token");
+            var response = await _AuthClient.AddCardsList(AddCardListDTO, token);
 
+            if (response.IsSuccessStatusCode)
+            {
+                await Shell.Current.GoToAsync("//HomePage", true);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "Login failed. Please check your credentials.", "Ok");
             }
 
         }
@@ -65,5 +96,7 @@ namespace MauiApp1.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        private readonly AuthClient _AuthClient;
     }
 }
