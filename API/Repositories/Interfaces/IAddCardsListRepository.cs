@@ -7,5 +7,7 @@ namespace API.Repositories.Interfaces
     {
         Task<FlashCardsLists>  AddCardsList(AddCardsListDTO addCardsListDTO, int Id);
 
+        Task<IEnumerable<FlashCardsLists>> GetUserFlashCardsLists(int userId);
+
     }
 }

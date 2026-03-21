@@ -31,5 +31,18 @@ namespace API.Repositories.Implementation
                 throw new UnauthorizedAccessException("Invalid email or password");
             }
         }
+
+        public async Task<IEnumerable<FlashCardsLists>> GetUserFlashCardsLists(int userId)
+        {
+            try
+            {
+                var flashCardsLists = await _datacontext.FlashCardsLists.Where(x => x.UserId == userId).ToListAsync();
+                return flashCardsLists;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error retrieving flash cards lists.");
+            }
+        }
     }
 }

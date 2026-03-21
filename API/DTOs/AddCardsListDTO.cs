@@ -2,7 +2,6 @@
 {
     public class AddCardsListDTO
     {
-            public int UserId { get; set; }
 
             public string? Name { get; set; }
     

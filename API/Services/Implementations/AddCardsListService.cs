@@ -11,7 +11,7 @@ namespace API.Services.Implementations
         {
             _cardListService = cardListService;
         }
-        
+
         async public Task<(bool, string)> AddCardsList(AddCardsListDTO addCardsListDTO, int Id)
         {
             if (String.IsNullOrWhiteSpace(addCardsListDTO.Name))
@@ -32,5 +32,24 @@ namespace API.Services.Implementations
                 return (false, $"An error occurred: {ex.Message}");
             }
         }
-    } 
+        async public Task<(bool, string, IEnumerable<GetCardsListDTO>?)> GetUserCardsLists(int userId)
+        {
+            try
+            {
+                var cardLists = await _cardListService.GetUserFlashCardsLists(userId);
+                var dtoList = cardLists.Select(CardList => new GetCardsListDTO
+                {
+                    CardsListID = CardList.CardsListID,
+                    UserId = CardList.UserId,
+                    Name = CardList.Name,
+                    Description = CardList.Description
+                });
+                return (true, "Card lists retrieved successfully.", dtoList);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"An error occurred: {ex.Message}", null);
+            }
+        }
+    }
 }
