@@ -2,7 +2,7 @@
 
 namespace API.Services.Interfaces
 {
-    public interface ICardsListService
+    public interface IAddCardsListService
     {
         Task<(bool, string)> AddCardsList(AddCardsListDTO addCardsListDTO, int Id);
 

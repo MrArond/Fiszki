@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Implementation
 {
-    public class CardsListRepository(Datacontext _datacontext) : ICardsListRepository
+    public class AddCardsListRepository(Datacontext _datacontext) : IAddCardsListRepository
     {
 
         public async Task<FlashCardsLists> AddCardsList(AddCardsListDTO addCardsListDTO, int Id)

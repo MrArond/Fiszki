@@ -18,7 +18,7 @@ namespace MauiApp1.Services
 
         public async Task<HttpResponseMessage> RegisterAsync(RegisterDTO registerDto)
         {
-
+            
             return await _httpClient.PostAsJsonAsync("/api/Auth/Register", registerDto);
         }
 
@@ -35,14 +35,9 @@ namespace MauiApp1.Services
         public async Task<HttpResponseMessage> AddCardsList(AddCardsListDTO addCardsListDTO, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            return await _httpClient.PostAsJsonAsync("/api/CardsList/AddCardsList", addCardsListDTO);
+            return await _httpClient.PostAsJsonAsync("/api/AddCardsList/AddCardsList", addCardsListDTO);
         }
 
-        public async Task<HttpResponseMessage> GetUserCardsLists(string token)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            return await _httpClient.GetAsync("/api/CardsList/GetUserCardsLists");
-        }
     }
 }
 

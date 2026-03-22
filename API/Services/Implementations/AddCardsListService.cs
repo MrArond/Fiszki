@@ -3,11 +3,11 @@ using API.Services.Interfaces;
 using API.Repositories.Interfaces;
 namespace API.Services.Implementations
 {
-    public class CardsListService : ICardsListService
+    public class AddCardsListService : IAddCardsListService
     {
-        private readonly ICardsListRepository _cardListService;
+        private readonly IAddCardsListRepository _cardListService;
 
-        public CardsListService(ICardsListRepository cardListService)
+        public AddCardsListService(IAddCardsListRepository cardListService)
         {
             _cardListService = cardListService;
         }
@@ -39,6 +39,8 @@ namespace API.Services.Implementations
                 var cardLists = await _cardListService.GetUserFlashCardsLists(userId);
                 var dtoList = cardLists.Select(CardList => new GetCardsListDTO
                 {
+                    CardsListID = CardList.CardsListID,
+                    UserId = CardList.UserId,
                     Name = CardList.Name,
                     Description = CardList.Description
                 });
