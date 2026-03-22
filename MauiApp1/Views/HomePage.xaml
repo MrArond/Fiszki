@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Sites.HomePage"
+             x:Name="HomePageRoot"
              Title="Twoje Fiszki">
     <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCardsListsCommand}">
         <ScrollView>
@@ -27,6 +28,11 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="10" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray500}}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding BindingContext.GoToCardListCommand, Source={x:Reference HomePageRoot}}"
+                                        CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
                                 <VerticalStackLayout Spacing="5">
                                     <Label 
                                         Text="{Binding Name}" 

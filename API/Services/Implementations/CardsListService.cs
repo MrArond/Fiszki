@@ -39,6 +39,7 @@ namespace API.Services.Implementations
                 var cardLists = await _cardListService.GetUserFlashCardsLists(userId);
                 var dtoList = cardLists.Select(CardList => new GetCardsListDTO
                 {
+                    FlashCardsListsCardsListID = CardList.CardsListID,
                     Name = CardList.Name,
                     Description = CardList.Description
                 });

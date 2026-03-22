@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using API.DTOs;
+using MauiApp1.Views;
 
 namespace MauiApp1.ViewModels
 {
@@ -38,11 +39,21 @@ namespace MauiApp1.ViewModels
         }
 
         public ICommand LoadCardsListsCommand { get; }
+        public ICommand GoToCardListCommand { get; }
 
         public HomePageViewModel(AuthClient authClient)
         {
             _authClient = authClient;
             LoadCardsListsCommand = new Command(async () => await LoadCardsListsAsync(), () => !IsBusy);
+            GoToCardListCommand = new Command<GetCardsListDTO>(async (selectedList) => await GoToCardListAsync(selectedList));
+        }
+
+        private async Task GoToCardListAsync(GetCardsListDTO selectedList)
+        {
+            if (selectedList == null)
+                return;
+
+            await Shell.Current.GoToAsync($"CardList?FlashCardsListsCardsListID={selectedList.FlashCardsListsCardsListID}");
         }
 
         private async Task LoadCardsListsAsync()
@@ -86,3 +97,4 @@ namespace MauiApp1.ViewModels
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
+
