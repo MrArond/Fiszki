@@ -3,7 +3,7 @@ using API.DTOs;
 
 namespace API.Repositories.Interfaces
 {
-    public interface IAddCardsListRepository
+    public interface ICardsListRepository
     {
         Task<FlashCardsLists>  AddCardsList(AddCardsListDTO addCardsListDTO, int Id);
 

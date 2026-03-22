@@ -2,24 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.Sites.HomePage"
-             Title="HomePage">
-    <ScrollView>
-    <Grid RowDefinitions="9.0*, auto,  1*">
-            <VerticalStackLayout
-        Grid.Row="0"
-                BackgroundColor="{DynamicResource PrimaryColor}"
-                Padding="25"
-                Spacing="25">
+             Title="Twoje Fiszki">
+    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCardsListsCommand}">
+        <ScrollView>
+            <Grid RowDefinitions="9.0*, auto,  1*">
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    Padding="25"
+                    Spacing="25"
+                    BindableLayout.ItemsSource="{Binding CardsLists}">
 
-                <Label
-                        FontSize="32"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        LineBreakMode="WordWrap"
-                        Margin="0,20,0,20"
-                        />
-            </VerticalStackLayout>
-        </Grid>
-    </ScrollView>
+                    <BindableLayout.EmptyView>
+                        <Label
+                            Text="Brak list fiszek. Dodaj swoją pierwszą listę!"
+                            FontSize="32"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap"
+                            Margin="0,20,0,20" />
+                    </BindableLayout.EmptyView>
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray500}}">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label 
+                                        Text="{Binding Name}" 
+                                        FontSize="32" 
+                                        FontAttributes="Bold" 
+                                        HorizontalOptions="Center" 
+                                        HorizontalTextAlignment="Center" 
+                                        LineBreakMode="WordWrap" />
+                                    <Label 
+                                        Text="{Binding Description}" 
+                                        FontSize="16" 
+                                        HorizontalOptions="Center" 
+                                        HorizontalTextAlignment="Center" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>

@@ -22,10 +22,12 @@ namespace API
             // Rejestracja serwisów
             builder.Services.AddTransient<IForgotService, ForgotService>();
             builder.Services.AddTransient<IAuthService, AuthService>();
-            builder.Services.AddTransient<IAddCardsListService, AddCardsListService>();
+            builder.Services.AddTransient<ICardsRepository, CardsRepository>();
+            builder.Services.AddTransient<ICardsService, CardsService>();
+            builder.Services.AddTransient<ICardsListService, CardsListService>();
             builder.Services.AddTransient<IForgotRepository, ForgotRepository>();
             builder.Services.AddTransient<IAuthRepository, AuthRepository>();
-            builder.Services.AddTransient<IAddCardsListRepository, AddCardsListRepository>();
+            builder.Services.AddTransient<ICardsListRepository, CardsListRepository>();
             builder.Services.AddDbContext<Datacontext>();
             
             // JwtServices generuje tokeny - musi u¿ywaæ TEGO SAMEGO klucza co validacja

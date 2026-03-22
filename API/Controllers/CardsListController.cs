@@ -10,9 +10,9 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class CardsListController : ControllerBase
     {
-        private readonly IAddCardsListService _addCardsListService;
+        private readonly ICardsListService _addCardsListService;
 
-        public CardsListController(IAddCardsListService addCardsListService)
+        public CardsListController(ICardsListService addCardsListService)
         {
             _addCardsListService = addCardsListService;
         }
