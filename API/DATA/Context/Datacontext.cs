@@ -13,7 +13,7 @@ namespace API.DATA.Context
         public DbSet<FlashCards> FlashCards { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Host=localhost;Port=5432;Database=flashcards;Username=postgres;Password=zaq1@WSX;";
+            var connectionString = "Host=localhost;Port=5432;Database=flashcards;Username=postgres;Password=ZAQ!2wsx;";
             optionsBuilder.UseNpgsql(connectionString);
         }
     }

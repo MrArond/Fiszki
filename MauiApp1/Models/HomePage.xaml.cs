@@ -7,10 +7,10 @@ public partial class HomePage : ContentPage
 {
 	private HomePageViewModel _viewModel;
 
-	public HomePage(AuthClient authClient)
+	public HomePage(Cards cards)
 	{
 		InitializeComponent();
-		_viewModel = new HomePageViewModel(authClient);
+		_viewModel = new HomePageViewModel(cards);
 		BindingContext = _viewModel;
 	}
 

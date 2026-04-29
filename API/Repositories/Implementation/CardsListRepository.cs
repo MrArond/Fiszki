@@ -44,5 +44,23 @@ namespace API.Repositories.Implementation
                 throw new Exception("Error retrieving flash cards lists.");
             }
         }
+        public async Task<bool> DeleteCardsList(DeleteCardsListDTO deleteCardsListDTO, int userId)
+        {
+            try
+            {
+                var list = await _datacontext.FlashCardsLists.FirstOrDefaultAsync(x => x.CardsListID == deleteCardsListDTO.CardsListId && x.UserId == userId);
+                if (list == null)
+                {
+                    return false;
+                }
+                _datacontext.FlashCardsLists.Remove(list);
+                await _datacontext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error deleting flash cards list.");
+            }
+        }
     }
 }

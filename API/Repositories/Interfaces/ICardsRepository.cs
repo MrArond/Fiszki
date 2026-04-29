@@ -8,5 +8,7 @@ namespace API.Repositories.Interfaces
         Task<FlashCards> CreateCard(AddCardDTO addCardDTO, int userId);
 
         Task<IEnumerable<FlashCards>> GetCardsByListId(int listId, int userId);
+
+        Task<bool> DeleteCard(DeleteCardDTO deleteCardDTO, int userId);
     }
 }

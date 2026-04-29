@@ -32,8 +32,12 @@ namespace API.Repositories.Implementation
 
         public async Task<User> LoginUser(LoginDTO loginDTO)
         {
-            var user = await _datacontext.Users.FirstOrDefaultAsync(c =>
-                c.Email.ToLower() == loginDTO.Email.ToLower() && c.Password == loginDTO.Password);
+            var user = await _datacontext.Users.Where(c =>
+                c.Email.ToLower() == loginDTO.Email.ToLower() && c.Password == loginDTO.Password)
+                .FirstOrDefaultAsync();
+
+            var queryQWE = _datacontext.Users.Where(c =>
+                c.Email.ToLower() == loginDTO.Email.ToLower() && c.Password == loginDTO.Password).ToQueryString();
 
             if (user != null)
             {

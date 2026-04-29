@@ -56,7 +56,7 @@ namespace API.Services.Implementations
                 return (false, "Invalid email or password");
             }
             catch (Exception ex)
-            {   
+            {
                 return (false, $"An error occurred: {ex.Message}");
             }
         }

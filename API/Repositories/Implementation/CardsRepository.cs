@@ -54,10 +54,31 @@ namespace API.Repositories.Implementation
                     .ToListAsync();
 
                 return cards;
+
             }
             catch (Exception)
             {
-                throw;
+                throw new Exception("Error retrieving flash cards.");
+            }
+        }
+        public async Task<bool> DeleteCard(DeleteCardDTO deleteCardDTO, int userId)
+        {
+            try
+            {
+                var card = await _datacontext.FlashCards
+                    .FirstOrDefaultAsync(c => c.CardsId == deleteCardDTO.CardId && 
+                        _datacontext.FlashCardsLists.Any(l => l.CardsListID == c.FlashCardsListsCardsListID && l.UserId == userId));
+                if (card == null)
+                {
+                    return false;
+                }
+                _datacontext.FlashCards.Remove(card);
+                await _datacontext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error deleting flash card.");
             }
         }
     }

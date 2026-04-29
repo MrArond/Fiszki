@@ -41,9 +41,9 @@ namespace API.Controllers
             var (isSuccess, message) = await _authService.Login(login);
             if (isSuccess)
             {
-                return Ok(new { message });
+                return Ok(message);
             }
-            return BadRequest(new { message });
+            return BadRequest(message);
 
         }
         public AuthController(IAuthService authService)
@@ -51,9 +51,5 @@ namespace API.Controllers
             _authService = authService;
         }
         private readonly IAuthService _authService;
-
-
-
-
     }
 }

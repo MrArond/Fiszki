@@ -1,168 +1,91 @@
-﻿using System.Collections.ObjectModel;
-using System.Net.Http.Json;
+﻿using API.DTOs;
+using MauiApp1.Services;
+using MauiApp1.Views;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using API.DTOs;
 
 namespace MauiApp1.ViewModels
 {
-    [QueryProperty(nameof(FlashCardsListsCardsListID), "FlashCardsListsCardsListID")]
+    [QueryProperty(nameof(ListId), "FlashCardsListsCardsListID")]
     public class CardListViewModel : INotifyPropertyChanged
     {
-        private readonly HttpClient _httpClient;
-
-        private int _flashCardsListsCardsListID;
-        public int FlashCardsListsCardsListID
+        private int _listId;
+        public int ListId
         {
-            get => _flashCardsListsCardsListID;
+            get => _listId;
             set
             {
-                if (_flashCardsListsCardsListID != value)
-                {
-                    _flashCardsListsCardsListID = value;
-                    OnPropertyChanged();
-                    LoadCardsAsync().ConfigureAwait(false);
-                }
+                _listId = value;
+                OnPropertyChanged();
+                Task.Run(LoadCardListsAsync); // Ładuj pozycje po przekazaniu ListId z QueryProperty
             }
         }
-
-        private ObservableCollection<GetCardDTO> _cards = new();
+        private readonly Cards _cards;
+        public CardListViewModel(Cards cards)
+        {
+            _cards = cards;
+            LoadCardsCommand = new Command(async () => await LoadCardListsAsync());
+            Cards = new ObservableCollection<GetCardDTO>();
+        }
+        private ObservableCollection<GetCardDTO> _cardsList;
         public ObservableCollection<GetCardDTO> Cards
         {
-            get => _cards;
+            get => _cardsList;
             set
             {
-                _cards = value;
+                _cardsList = value;
                 OnPropertyChanged();
             }
         }
-
-        private string _newCardName;
-        public string NewCardName
-        {
-            get => _newCardName;
-            set
-            {
-                _newCardName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _newTranslate;
-        public string NewTranslate
-        {
-            get => _newTranslate;
-            set
-            {
-                _newTranslate = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                _isBusy = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ICommand LoadCardsCommand { get; }
-        public ICommand AddCardCommand { get; }
-
-        public CardListViewModel()
+        private async Task LoadCardListsAsync()
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7037");
+            if (ListId <= 0) return;
 
-            LoadCardsCommand = new Command(async () => await LoadCardsAsync());
-            AddCardCommand = new Command(async () => await AddCardAsync());
-        }
-
-        public async Task LoadCardsAsync()
-        {
-            if (IsBusy) return;
-            IsBusy = true;
             try
             {
-                string token = await SecureStorage.Default.GetAsync("auth_token");
-                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var token = await SecureStorage.GetAsync("auth_token");
+                if (string.IsNullOrEmpty(token))
+                {
+                    await Shell.Current.DisplayAlert("Error", "You are not logged in.", "Ok");
+                    return;
+                }
 
-                var response = await _httpClient.GetAsync($"/api/Cards/GetCards/{FlashCardsListsCardsListID}");
+                var response = await _cards.GetCardsByListId(ListId, token);
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadFromJsonAsync<GetCardsResponse>();
-                    Cards.Clear();
-                    if (result?.Cards != null)
+                    var result = await response.Content.ReadFromJsonAsync<CardsResponse>();
+                    if (result != null && result.Cards != null)
                     {
-                        foreach (var card in result.Cards)
+                        MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            Cards.Add(card);
-                        }
+                            Cards.Clear();
+                            foreach (var item in result.Cards)
+                            {
+                                Cards.Add(item);
+                            }
+                        });
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                IsBusy = false;
+                await Shell.Current.DisplayAlert("Error", $"Failed to load card lists: {ex.Message}", "OK");
             }
         }
 
-        public async Task AddCardAsync()
+        public class CardsResponse
         {
-            if (string.IsNullOrWhiteSpace(NewCardName) || string.IsNullOrWhiteSpace(NewTranslate)) return;
-            if (IsBusy) return;
-            IsBusy = true;
-            try
-            {
-                string token = await SecureStorage.Default.GetAsync("auth_token");
-                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
-                var addCardDto = new AddCardDTO 
-                {
-                    CardName = NewCardName,
-                    Translate = NewTranslate,
-                    FlashCardsListsCardsListID = FlashCardsListsCardsListID
-                };
-
-                var response = await _httpClient.PostAsJsonAsync("/api/Cards/AddCard", addCardDto);
-                if (response.IsSuccessStatusCode)
-                {
-                    NewCardName = string.Empty;
-                    NewTranslate = string.Empty;
-                    IsBusy = false;
-                    await LoadCardsAsync();
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            public string Message { get; set; }
+            public IEnumerable<GetCardDTO> Cards { get; set; }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null!)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public class GetCardsResponse
-    {
-        public string Message { get; set; }
-        public List<GetCardDTO> Cards { get; set; }
     }
 }

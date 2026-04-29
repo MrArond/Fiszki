@@ -4,9 +4,9 @@ namespace MauiApp1.Views;
 
 public partial class CardList : ContentPage
 {
-	public CardList()
+	public CardList(CardListViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = new CardListViewModel();
+		BindingContext = viewModel;
 	}
 }
