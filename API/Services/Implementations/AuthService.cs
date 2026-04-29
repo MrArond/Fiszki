@@ -56,7 +56,7 @@ namespace API.Services.Implementations
                 return (false, "Invalid email or password");
             }
             catch (Exception ex)
-            {   
+            {
                 return (false, $"An error occurred: {ex.Message}");
             }
         }
@@ -82,7 +82,7 @@ namespace API.Services.Implementations
 
             try
             {
-                var existingUser = await _authRepository.GetByEmail(registerDTO.Email, registerDTO.NickName);
+                var existingUser = await _authRepository.GetByEmail(registerDTO);
                 if (existingUser != null)
                 {
                     return (false, "User with this email or nickname already exists");

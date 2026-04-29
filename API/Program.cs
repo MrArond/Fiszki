@@ -30,7 +30,9 @@ namespace API
             
             // JwtServices generuje tokeny - musi u¿ywaæ TEGO SAMEGO klucza co validacja
             builder.Services.AddScoped<JwtServices>();
-            
+
+            System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             
@@ -68,23 +70,28 @@ namespace API
                 throw new InvalidOperationException("JWT_SECRET is not configured");
             }
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            builder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(x =>
+            {
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.SaveToken = true;
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ClockSkew = TimeSpan.Zero,
-                        ValidIssuer = builder.Configuration["Authentication:ValidIssuer"],
-                        ValidAudience = builder.Configuration["Authentication:ValidAudience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = builder.Configuration["Authentication:ValidIssuer"],
+                    ValidAudience = builder.Configuration["Authentication:ValidAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+                };
+            });
+
+
 
             builder.Services.AddAuthorization();
 
@@ -98,9 +105,8 @@ namespace API
 
             app.UseHttpsRedirection();
             
-            // KOLEJNOŒÆ MA ZNACZENIE!
-            app.UseAuthentication();  // 1. Sprawdza token
-            app.UseAuthorization();   // 2. Sprawdza uprawnienia
+            app.UseAuthentication();  
+            app.UseAuthorization();  
 
             app.MapControllers();
 

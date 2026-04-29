@@ -25,7 +25,11 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddHttpClient<AuthClient>();
+        builder.Services.AddHttpClient<Cards>();
         builder.Services.AddTransient<Login>();
+        builder.Services.AddTransient<MauiApp1.Sites.HomePage>();
+        builder.Services.AddTransient<MauiApp1.Views.CardList>();
+        builder.Services.AddTransient<MauiApp1.ViewModels.CardListViewModel>();
 
         return builder.Build();
     }

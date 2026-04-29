@@ -2,8 +2,12 @@ namespace MauiApp1.Sites;
 
 public partial class HomePage : ContentPage
 {
-	public HomePage()
+	private HomePageViewModel _viewModel;
+
+	public HomePage(Cards cards)
 	{
 		InitializeComponent();
+		_viewModel = new HomePageViewModel(cards);
+		BindingContext = _viewModel;
 	}
 }
