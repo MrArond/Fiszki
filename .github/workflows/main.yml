@@ -8,6 +8,9 @@ on:
       - closed
   workflow_dispatch:
 
+
+    
+
 jobs: 
   after_merge:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
@@ -18,7 +21,7 @@ jobs:
       HOST: ${{ secrets.DEPLOY_HOST }}
       USER: ${{ vars.DEPLOY_USER }}
       PASSWORD: ${{ vars.DEPLOY_PASSWORD }}
-      PORT: ${{ secrets.DEPLOY_PORT }}
+      PORT: ${{ vars.PORT }}
 
     steps:
 
@@ -28,7 +31,7 @@ jobs:
             host: ${{ env.HOST }}
             username: ${{ env.USER }}
             password: ${{ env.PASSWORD }}
-            port: ${{ vars.PORT }}
+            port: $PORT
             script: whoami
 
           
