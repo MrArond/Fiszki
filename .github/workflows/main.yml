@@ -28,7 +28,7 @@ jobs:
             host: ${{ env.HOST }}
             username: ${{ env.USER }}
             password: ${{ env.PASSWORD }}
-            port: ${{ secrets.DEPLOY_PORT }}
+            port: ${{ vars.PORT }}
             script: whoami
 
           
