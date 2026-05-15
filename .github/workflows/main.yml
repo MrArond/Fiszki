@@ -20,12 +20,9 @@ jobs:
       PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
       PORT: ${{ vars.PORT }}
     steps:
-      - name: Debug Environment Variables
-        run: |
-          echo "ssh ${{ vars.DEPLOY_USER }}@${{ vars.HOST }} -p ${{ vars.PORT }}"
       - name: SSH connection
         run: |
-          ssh $USER@$HOST -p $PORT
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT
           yes
           $PASSWORD
 
