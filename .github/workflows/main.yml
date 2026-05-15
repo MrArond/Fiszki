@@ -26,6 +26,7 @@ jobs:
       - name: SSH connection
         run: |
           ssh $USER@$HOST -p $PORT
+          yes
           $PASSWORD
 
           
