@@ -8,9 +8,6 @@ on:
       - closed
   workflow_dispatch:
 
-
-    
-
 jobs: 
   after_merge:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
@@ -22,13 +19,17 @@ jobs:
       USER: ${{ vars.DEPLOY_USER }}
       PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
       PORT: ${{ vars.PORT }}
-
     steps:
-
-        - name: SSH connection
-          run: |
-            ssh $USER@$HOST -p $PORT
-            $PASSWORD
+      - name: Debug Environment Variables
+        run: |
+          echo "HOST is: '${{ vars.HOST }}'"
+          echo "USER is: '${{ vars.DEPLOY_USER }}'"
+          echo "PORT is: '${{ vars.PORT }}'"
+          # We do not echo the password to keep it secure
+      - name: SSH connection
+        run: |
+          ssh $USER@$HOST -p $PORT
+          $PASSWORD
 
           
 
