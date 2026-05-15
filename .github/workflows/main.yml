@@ -27,7 +27,7 @@ jobs:
 
         - name: SSH connection
           run: |
-            ssh ${{ env.USER }}@${{ env.HOST }} '-p' ${{ env.PORT }} 
+            ssh ${{ env.USER }}@$HOST '-p' ${{ env.PORT }} 
             ${{  env.PASSWORD }}
 
           
