@@ -20,7 +20,7 @@ jobs:
     env:
       HOST: ${{ secrets.DEPLOY_HOST }}
       USER: ${{ vars.DEPLOY_USER }}
-      PASSWORD: ${{ vars.DEPLOY_PASSWORD }}
+      PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
       PORT: ${{ vars.PORT }}
 
     steps:
