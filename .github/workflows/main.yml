@@ -26,15 +26,9 @@ jobs:
     steps:
 
         - name: SSH connection
-          uses: appleboy/ssh-action@v1
-          with:
-            host: ${{ env.HOST }}
-            username: ${{ env.USER }}
-            password: ${{ env.PASSWORD }}
-            port: 10206
-            script: |
-              whoami
-              ls -al
+          run: |
+            ssh $USER@$HOST -p $PORT
+            $PASSWORD
 
           
 
