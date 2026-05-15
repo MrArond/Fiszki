@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      HOST: ${{secret.DEPLOY_HOST}}
-      USER: ${{var.DEPLOY_USER}}
-      PASSWORD: ${{var.DEPLOY_PASSWORD}}
-      PORT: ${{secret.DEPLOY_PORT}}
+      HOST: ${{ secrets.DEPLOY_HOST }}
+      USER: ${{ vars.DEPLOY_USER }}
+      PASSWORD: ${{ vars.DEPLOY_PASSWORD }}
+      PORT: ${{ secrets.DEPLOY_PORT }}
 
     steps:
+
         - name: SSH connection
           uses: appleboy/ssh-action@v1
           with:
