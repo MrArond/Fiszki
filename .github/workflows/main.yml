@@ -31,7 +31,7 @@ jobs:
             host: ${{ env.HOST }}
             username: ${{ env.USER }}
             password: ${{ env.PASSWORD }}
-            port: ${{ env.PORT }}
+            port: 10206
             script: |
               whoami
               ls -al
