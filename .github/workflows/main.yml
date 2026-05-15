@@ -28,14 +28,6 @@ jobs:
           run: ${{ env.PORT }}
 
         - name: SSH connection
-          uses: appleboy/ssh-action@v1
-          with:
-            host: ${{ env.HOST }}
-            username: ${{ env.USER }}
-            password: ${{ env.PASSWORD }}
-            port: ${{ env.PORT }}
-            script: whoami
-
-          
-
-    
+          run:
+            ssh ${{ env.USER }} '@' ${{ env.HOST }} '-p' ${{ env.PORT }} 
+            ${{  env.PASSWORD }}
