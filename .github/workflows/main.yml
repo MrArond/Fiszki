@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      HOST: ${{ vars.HOST }}
+      HOST: ${{ secrets.DEPLOY_HOST }}
       USER: ${{ vars.DEPLOY_USER }}
       PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
-      PORT: ${{ vars.PORT }}
+      PORT: ${{ secrets.DEPLOY_PORT }}
     steps:
       - name: SSH connection
         run: |
