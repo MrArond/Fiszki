@@ -10,6 +10,7 @@ on:
 jobs: 
   after_merge:
     if: github.event.pull_request.merged == true
+    environment: dev
     runs-on: ubuntu-latest
     steps:
 
@@ -29,3 +30,7 @@ jobs:
           password: "PASSWORD"
           port: "PORT"
           script: whoami
+
+          
+
+    
