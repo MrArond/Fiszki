@@ -20,6 +20,9 @@ jobs:
       PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
       PORT: ${{ secrets.DEPLOY_PORT }}
     steps:
+      - name: Debug SSH command
+        run: |
+          echo "ssh -o StrictHostKeyChecking=no -p \"$PORT\" \"$DEPLOY_USER@$HOST\""
       - name: SSH connection
         run: |
           ssh -o StrictHostKeyChecking=no -p $PORT $DEPLOY_USER@$HOST
