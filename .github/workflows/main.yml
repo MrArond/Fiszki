@@ -24,6 +24,8 @@ jobs:
       PORT: ${{ vars.PORT }}
 
     steps:
+        - name: wypisanie
+          run: ${{ env.PORT }}
 
         - name: SSH connection
           uses: appleboy/ssh-action@v1
@@ -31,7 +33,7 @@ jobs:
             host: ${{ env.HOST }}
             username: ${{ env.USER }}
             password: ${{ env.PASSWORD }}
-            port: $PORT
+            port: ${{ env.PORT }}
             script: whoami
 
           
