@@ -1,0 +1,31 @@
+name: Test project
+
+on: 
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs: 
+  after_merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+
+    env:
+    - name: Env file
+      HOST: ${{secret.DEPLOY_HOST}}
+      USER: ${{var.DEPLOY_USER}}
+      PASSWORD: ${{var.DEPLOY_PASSWORD}}
+      PORT: ${{secret.DEPLOY_PORT}}
+
+    steps:
+      - name: SSH connection
+        uses: appleboy/ssh-action@v1
+        with:
+          host: "HOST"
+          username: "USER"
+          password: "PASSWORD"
+          port: "PORT"
+          script: whoami
