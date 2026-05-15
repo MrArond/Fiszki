@@ -25,7 +25,7 @@ jobs:
           echo "ssh -o StrictHostKeyChecking=no -p \"$PORT\" \"$DEPLOY_USER@$HOST\""
       - name: SSH connection
         run: |
-          ssh -o StrictHostKeyChecking=no -p $PORT $HOST@$HOST
+          ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST
           yes
           $PASSWORD
 
