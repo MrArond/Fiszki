@@ -8,6 +8,9 @@ on:
       - closed
   workflow_dispatch:
 
+
+    
+
 jobs: 
   after_merge:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
@@ -28,7 +31,7 @@ jobs:
             host: "HOST"
             username: "USER"
             password: "PASSWORD"
-            port: "PORT"
+            port: $PORT
             script: whoami
 
           
