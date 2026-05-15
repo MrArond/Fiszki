@@ -31,7 +31,7 @@ jobs:
             host: "HOST"
             username: "USER"
             password: "PASSWORD"
-            port: $PORT
+            port: 4{{ env.PORT }}
             script: whoami
 
           
