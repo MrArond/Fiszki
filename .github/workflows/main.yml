@@ -24,10 +24,12 @@ jobs:
       PORT: ${{ vars.PORT }}
 
     steps:
-        - name: wypisanie
-          run: ${{ env.PORT }}
 
         - name: SSH connection
-          run:
-            ssh ${{ env.USER }} '@' ${{ env.HOST }} '-p' ${{ env.PORT }} 
+          run: |
+            ssh ${{ env.USER }}@${{ env.HOST }} '-p' ${{ env.PORT }} 
             ${{  env.PASSWORD }}
+
+          
+
+    
