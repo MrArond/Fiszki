@@ -60,5 +60,47 @@ namespace API.Repositories.Implementation
                 throw;
             }
         }
+
+        public async Task<bool> DeleteCard(int cardId, int userId)
+        {
+            var card = await _datacontext.FlashCards.FirstOrDefaultAsync(c => c.CardsId == cardId);
+            if (card == null)
+            {
+                return false;
+            }
+
+            var listExists = await _datacontext.FlashCardsLists
+                .AnyAsync(l => l.CardsListID == card.FlashCardsListsCardsListID && l.UserId == userId);
+
+            if (!listExists)
+            {
+                return false;
+            }
+
+            _datacontext.FlashCards.Remove(card);
+            await _datacontext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<FlashCards?> UpdateCardName(UpdateCardNameDTO updateCardNameDTO, int userId)
+        {
+            var card = await _datacontext.FlashCards.FirstOrDefaultAsync(c => c.CardsId == updateCardNameDTO.CardsId);
+            if (card == null)
+            {
+                return null;
+            }
+
+            var listExists = await _datacontext.FlashCardsLists
+                .AnyAsync(l => l.CardsListID == card.FlashCardsListsCardsListID && l.UserId == userId);
+
+            if (!listExists)
+            {
+                return null;
+            }
+
+            card.CardName = updateCardNameDTO.CardName;
+            await _datacontext.SaveChangesAsync();
+            return card;
+        }
     }
 }

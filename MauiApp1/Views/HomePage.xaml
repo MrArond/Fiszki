@@ -46,6 +46,16 @@
                                         FontSize="16" 
                                         HorizontalOptions="Center" 
                                         HorizontalTextAlignment="Center" />
+                                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                                        <Button 
+                                            Text="Edytuj"
+                                            Command="{Binding BindingContext.RenameCardsListCommand, Source={x:Reference HomePageRoot}}"
+                                            CommandParameter="{Binding .}" />
+                                        <Button 
+                                            Text="Usuń"
+                                            Command="{Binding BindingContext.DeleteCardsListCommand, Source={x:Reference HomePageRoot}}"
+                                            CommandParameter="{Binding .}" />
+                                    </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </Frame>
                         </DataTemplate>

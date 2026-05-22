@@ -56,5 +56,43 @@ namespace API.Controllers
 
             return BadRequest(new { message });
         }
+
+        [HttpDelete("DeleteCardsList/{listId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteCardsList([FromRoute] int listId)
+        {
+            var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+            if (claim == null || !int.TryParse(claim.Value, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var (isSuccess, message) = await _addCardsListService.DeleteCardsList(listId, userId);
+            if (isSuccess)
+            {
+                return Ok(new { message });
+            }
+
+            return BadRequest(new { message });
+        }
+
+        [HttpPut("UpdateCardsListName")]
+        [Authorize]
+        public async Task<IActionResult> UpdateCardsListName([FromBody] UpdateCardsListNameDTO updateCardsListNameDTO)
+        {
+            var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+            if (claim == null || !int.TryParse(claim.Value, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var (isSuccess, message) = await _addCardsListService.UpdateCardsListName(updateCardsListNameDTO, userId);
+            if (isSuccess)
+            {
+                return Ok(new { message });
+            }
+
+            return BadRequest(new { message });
+        }
     }
 }

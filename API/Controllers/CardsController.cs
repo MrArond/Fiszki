@@ -49,5 +49,45 @@ namespace API.Controllers
             return BadRequest(new { message });
 
         }
+
+        [HttpDelete("DeleteCard/{cardId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteCard([FromRoute] int cardId)
+        {
+            var token = HttpContext.User.Claims.Select(c => new { c.Type, c.Value });
+            var claim = token.FirstOrDefault(n => n.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+            if (claim == null || !int.TryParse(claim.Value, out var userId))
+            {
+                return Unauthorized(new { message = "Nieprawidłowy token użytkownika." });
+            }
+
+            var (isSuccess, message) = await _cardsService.DeleteCard(cardId, userId);
+            if (isSuccess)
+            {
+                return Ok(new { message });
+            }
+
+            return BadRequest(new { message });
+        }
+
+        [HttpPut("UpdateCardName")]
+        [Authorize]
+        public async Task<IActionResult> UpdateCardName([FromBody] UpdateCardNameDTO updateCardNameDTO)
+        {
+            var token = HttpContext.User.Claims.Select(c => new { c.Type, c.Value });
+            var claim = token.FirstOrDefault(n => n.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+            if (claim == null || !int.TryParse(claim.Value, out var userId))
+            {
+                return Unauthorized(new { message = "Nieprawidłowy token użytkownika." });
+            }
+
+            var (isSuccess, message) = await _cardsService.UpdateCardName(updateCardNameDTO, userId);
+            if (isSuccess)
+            {
+                return Ok(new { message });
+            }
+
+            return BadRequest(new { message });
+        }
     }
 }

@@ -73,6 +73,8 @@ namespace MauiApp1.ViewModels
 
         public ICommand LoadCardsCommand { get; }
         public ICommand AddCardCommand { get; }
+        public ICommand DeleteCardCommand { get; }
+        public ICommand RenameCardCommand { get; }
 
         public CardListViewModel()
         {
@@ -81,6 +83,8 @@ namespace MauiApp1.ViewModels
 
             LoadCardsCommand = new Command(async () => await LoadCardsAsync());
             AddCardCommand = new Command(async () => await AddCardAsync());
+            DeleteCardCommand = new Command<GetCardDTO>(async (selectedCard) => await DeleteCardAsync(selectedCard));
+            RenameCardCommand = new Command<GetCardDTO>(async (selectedCard) => await RenameCardAsync(selectedCard));
         }
 
         public async Task LoadCardsAsync()
@@ -114,6 +118,74 @@ namespace MauiApp1.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private async Task DeleteCardAsync(GetCardDTO? selectedCard)
+        {
+            if (selectedCard == null)
+            {
+                return;
+            }
+
+            var confirm = await Shell.Current.DisplayAlert("Usuń fiszkę", "Czy na pewno chcesz usunąć tę fiszkę?", "Tak", "Nie");
+            if (!confirm)
+            {
+                return;
+            }
+
+            string token = await SecureStorage.Default.GetAsync("auth_token");
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                await Shell.Current.DisplayAlert("Error", "You are not logged in.", "Ok");
+                return;
+            }
+
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.DeleteAsync($"/api/Cards/DeleteCard/{selectedCard.CardsId}");
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadCardsAsync();
+                return;
+            }
+
+            await Shell.Current.DisplayAlert("Error", "Failed to delete card.", "Ok");
+        }
+
+        private async Task RenameCardAsync(GetCardDTO? selectedCard)
+        {
+            if (selectedCard == null)
+            {
+                return;
+            }
+
+            var newName = await Shell.Current.DisplayPromptAsync("Zmień nazwę", "Podaj nową nazwę fiszki", "Zapisz", "Anuluj", initialValue: selectedCard.CardName);
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                return;
+            }
+
+            string token = await SecureStorage.Default.GetAsync("auth_token");
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                await Shell.Current.DisplayAlert("Error", "You are not logged in.", "Ok");
+                return;
+            }
+
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            var dto = new UpdateCardNameDTO
+            {
+                CardsId = selectedCard.CardsId,
+                CardName = newName
+            };
+
+            var response = await _httpClient.PutAsJsonAsync("/api/Cards/UpdateCardName", dto);
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadCardsAsync();
+                return;
+            }
+
+            await Shell.Current.DisplayAlert("Error", "Failed to update card name.", "Ok");
         }
 
         public async Task AddCardAsync()

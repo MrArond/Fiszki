@@ -40,12 +40,16 @@ namespace MauiApp1.ViewModels
 
         public ICommand LoadCardsListsCommand { get; }
         public ICommand GoToCardListCommand { get; }
+        public ICommand DeleteCardsListCommand { get; }
+        public ICommand RenameCardsListCommand { get; }
 
         public HomePageViewModel(AuthClient authClient)
         {
             _authClient = authClient;
             LoadCardsListsCommand = new Command(async () => await LoadCardsListsAsync(), () => !IsBusy);
             GoToCardListCommand = new Command<GetCardsListDTO>(async (selectedList) => await GoToCardListAsync(selectedList));
+            DeleteCardsListCommand = new Command<GetCardsListDTO>(async (selectedList) => await DeleteCardsListAsync(selectedList));
+            RenameCardsListCommand = new Command<GetCardsListDTO>(async (selectedList) => await RenameCardsListAsync(selectedList));
         }
 
         private async Task GoToCardListAsync(GetCardsListDTO selectedList)
@@ -90,6 +94,72 @@ namespace MauiApp1.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private async Task DeleteCardsListAsync(GetCardsListDTO? selectedList)
+        {
+            if (selectedList == null)
+            {
+                return;
+            }
+
+            var confirm = await Shell.Current.DisplayAlert("Usuń listę", "Czy na pewno chcesz usunąć tę listę?", "Tak", "Nie");
+            if (!confirm)
+            {
+                return;
+            }
+
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token))
+            {
+                await Shell.Current.DisplayAlert("Error", "You are not logged in.", "Ok");
+                return;
+            }
+
+            var response = await _authClient.DeleteCardsList(selectedList.FlashCardsListsCardsListID, token);
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadCardsListsAsync();
+                return;
+            }
+
+            await Shell.Current.DisplayAlert("Error", "Failed to delete flashcards list.", "Ok");
+        }
+
+        private async Task RenameCardsListAsync(GetCardsListDTO? selectedList)
+        {
+            if (selectedList == null)
+            {
+                return;
+            }
+
+            var newName = await Shell.Current.DisplayPromptAsync("Zmień nazwę", "Podaj nową nazwę listy", "Zapisz", "Anuluj", initialValue: selectedList.Name);
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                return;
+            }
+
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token))
+            {
+                await Shell.Current.DisplayAlert("Error", "You are not logged in.", "Ok");
+                return;
+            }
+
+            var dto = new UpdateCardsListNameDTO
+            {
+                CardsListID = selectedList.FlashCardsListsCardsListID,
+                Name = newName
+            };
+
+            var response = await _authClient.UpdateCardsListName(dto, token);
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadCardsListsAsync();
+                return;
+            }
+
+            await Shell.Current.DisplayAlert("Error", "Failed to update flashcards list name.", "Ok");
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -39,6 +39,7 @@ namespace API.Services.Implementations
 
                 var dtos = result.Select(c => new GetCardDTO
                 {
+                    CardsId = c.CardsId,
                     CardName = c.CardName,
                     Translate = c.Translate,
                     FlashCardsListsCardsListID = c.FlashCardsListsCardsListID
@@ -54,6 +55,33 @@ namespace API.Services.Implementations
                 }
                 throw new Exception($"Error retrieving cards: {ex.Message}");
             }
+        }
+
+        public async Task<(bool isSuccess, string message)> DeleteCard(int cardId, int userId)
+        {
+            var deleted = await _cardsRepository.DeleteCard(cardId, userId);
+            if (!deleted)
+            {
+                return (false, "Karta nie istnieje lub nie masz do niej dostępu.");
+            }
+
+            return (true, "Karta usunięta.");
+        }
+
+        public async Task<(bool isSuccess, string message)> UpdateCardName(UpdateCardNameDTO updateCardNameDTO, int userId)
+        {
+            if (string.IsNullOrWhiteSpace(updateCardNameDTO.CardName))
+            {
+                return (false, "Nazwa karty jest wymagana.");
+            }
+
+            var updated = await _cardsRepository.UpdateCardName(updateCardNameDTO, userId);
+            if (updated == null)
+            {
+                return (false, "Karta nie istnieje lub nie masz do niej dostępu.");
+            }
+
+            return (true, "Zaktualizowano nazwę karty.");
         }
     }
 }

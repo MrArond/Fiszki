@@ -2,6 +2,8 @@
 {
     public class GetCardDTO
     {
+        public int CardsId { get; set; }
+
         public string? CardName { get; set; }
 
         public string? Translate { get; set; }

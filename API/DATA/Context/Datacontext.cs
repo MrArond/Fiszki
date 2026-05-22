@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using API.DATA.Models;
+﻿using API.DATA.Models;
+using Microsoft.EntityFrameworkCore;
 namespace API.DATA.Context
 {
     public class Datacontext : DbContext
     {
-        public Datacontext(DbContextOptions<Datacontext> options) : base(options) 
+        public Datacontext(DbContextOptions<Datacontext> options) : base(options)
         {
 
         }
@@ -13,10 +13,9 @@ namespace API.DATA.Context
         public DbSet<FlashCards> FlashCards { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Host=localhost;Port=5432;Database=flashcards;Username=postgres;Password=zaq1@WSX;";
+            var connectionString = "Host=localhost;Port=5432;Database=flashcards;Username=postgres;Password=ZAQ!2wsx;";
             optionsBuilder.UseNpgsql(connectionString);
         }
     }
-    
+
 }
- 
