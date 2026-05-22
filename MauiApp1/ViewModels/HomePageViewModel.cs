@@ -112,7 +112,7 @@ namespace MauiApp1.ViewModels
                 return;
             }
 
-            var response = await _authClient.DeleteCardsList(selectedList.FlashCardsListsCardsListID, token);
+            var response = await _cards.DeleteCardsList(selectedList.FlashCardsListsCardsListID, token);
             if (response.IsSuccessStatusCode)
             {
                 await LoadCardsListsAsync();
@@ -148,7 +148,7 @@ namespace MauiApp1.ViewModels
                 Name = newName
             };
 
-            var response = await _authClient.UpdateCardsListName(dto, token);
+            var response = await _cards.UpdateCardsListName(dto, token);
             if (response.IsSuccessStatusCode)
             {
                 await LoadCardsListsAsync();

@@ -34,5 +34,35 @@ namespace MauiApp1.Services
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             return await _httpClient.GetAsync($"/api/Cards/GetCards/{listId}");
         }
+
+        public async Task<HttpResponseMessage> AddCard(AddCardDTO addCardDTO, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            return await _httpClient.PostAsJsonAsync("/api/Cards/AddCard", addCardDTO);
+        }
+
+        public async Task<HttpResponseMessage> DeleteCard(int cardId, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            return await _httpClient.DeleteAsync($"/api/Cards/DeleteCard/{cardId}");
+        }
+
+        public async Task<HttpResponseMessage> UpdateCardName(UpdateCardNameDTO updateCardNameDTO, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            return await _httpClient.PutAsJsonAsync("/api/Cards/UpdateCardName", updateCardNameDTO);
+        }
+
+        public async Task<HttpResponseMessage> DeleteCardsList(int listId, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            return await _httpClient.DeleteAsync($"/api/CardsList/DeleteCardsList/{listId}");
+        }
+
+        public async Task<HttpResponseMessage> UpdateCardsListName(UpdateCardsListNameDTO updateCardsListNameDTO, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            return await _httpClient.PutAsJsonAsync("/api/CardsList/UpdateCardsListName", updateCardsListNameDTO);
+        }
     }
 }

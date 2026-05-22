@@ -36,23 +36,6 @@ namespace API.Controllers
 
             return BadRequest(new { message });
         }
-        [HttpDelete("DeleteCardsList")]
-        [Authorize]
-        public async Task<IActionResult> DeleteCardsList([FromBody] DeleteCardsListDTO deleteCardsList)
-        {
-            var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub || c.Type == ClaimTypes.NameIdentifier);
-            if (claim == null || !int.TryParse(claim.Value, out var userId))
-            {
-                return Unauthorized();
-            }
-            var (isSuccess, message) = await _addCardsListService.DeleteCardsList(deleteCardsList, userId);
-            if (isSuccess)
-            {
-                return Ok(new { message });
-            }
-            return BadRequest(new { message });
-        }
-
         [HttpGet("GetUserCardsLists")]
         [Authorize]
         public async Task<IActionResult> GetUserCardsLists()

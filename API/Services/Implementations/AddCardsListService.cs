@@ -50,5 +50,32 @@ namespace API.Services.Implementations
                 return (false, $"An error occurred: {ex.Message}", null);
             }
         }
+
+        public async Task<(bool isSuccess, string message)> DeleteCardsList(int listId, int userId)
+        {
+            var deleted = await _cardListService.DeleteCardsList(listId, userId);
+            if (!deleted)
+            {
+                return (false, "Lista nie istnieje lub nie masz do niej dostępu.");
+            }
+
+            return (true, "Lista została usunięta.");
+        }
+
+        public async Task<(bool isSuccess, string message)> UpdateCardsListName(UpdateCardsListNameDTO updateCardsListNameDTO, int userId)
+        {
+            if (string.IsNullOrWhiteSpace(updateCardsListNameDTO.Name))
+            {
+                return (false, "Nazwa listy jest wymagana.");
+            }
+
+            var updated = await _cardListService.UpdateCardsListName(updateCardsListNameDTO, userId);
+            if (updated == null)
+            {
+                return (false, "Lista nie istnieje lub nie masz do niej dostępu.");
+            }
+
+            return (true, "Zaktualizowano nazwę listy.");
+        }
     }
 }
