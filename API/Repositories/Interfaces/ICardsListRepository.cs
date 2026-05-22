@@ -9,9 +9,5 @@ namespace API.Repositories.Interfaces
 
         Task<IEnumerable<FlashCardsLists>> GetUserFlashCardsLists(int userId);
 
-        Task<bool> DeleteCardsList(int listId, int userId);
-
-        Task<FlashCardsLists?> UpdateCardsListName(UpdateCardsListNameDTO updateCardsListNameDTO, int userId);
-
     }
 }

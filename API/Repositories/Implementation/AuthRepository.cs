@@ -2,19 +2,17 @@
 using API.DATA.Models;
 using API.DTOs;
 using API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 namespace API.Repositories.Implementation
 {
     public class AuthRepository(Datacontext _datacontext) : IAuthRepository
     {
-        public async Task<User?> GetByEmail(string email, string nickname)
+        public async Task<User?> GetByEmail(RegisterDTO registerDTO)
             => await _datacontext.Users.FirstOrDefaultAsync(c => 
-                c.Email.ToLower() == email.ToLower() || c.Nickname == nickname);
+                c.Email.ToLower() == registerDTO.Email.ToLower() || c.Nickname == registerDTO.NickName);
 
-        public async Task<User?> LoginUser(string email, string password)
-            => await _datacontext.Users.FirstOrDefaultAsync(c =>
-                c.Email.ToLower() == email.ToLower() && c.Password == password);
 
         public async Task<User> RegisterUser(RegisterDTO registerDto)
         {
@@ -34,14 +32,21 @@ namespace API.Repositories.Implementation
 
         public async Task<User> LoginUser(LoginDTO loginDTO)
         {
-            var user = await LoginUser(loginDTO.Email, loginDTO.Password);
+            var user = await _datacontext.Users.Where(c =>
+                c.Email.ToLower() == loginDTO.Email.ToLower() && c.Password == loginDTO.Password)
+                .FirstOrDefaultAsync();
 
-            if(user != null)
+            var queryQWE = _datacontext.Users.Where(c =>
+                c.Email.ToLower() == loginDTO.Email.ToLower() && c.Password == loginDTO.Password).ToQueryString();
+
+            if (user != null)
             {
                 return user;
             }
-
-            throw new UnauthorizedAccessException("Invalid email or password");
+            else
+            {
+                throw new UnauthorizedAccessException("Zle dane");
+            }
         }
         
     }

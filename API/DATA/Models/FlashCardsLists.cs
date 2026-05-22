@@ -10,8 +10,6 @@ namespace API.DATA.Models
 
         public int CardsListID { get; set; }
 
-        public ICollection<FlashCards>? FlashCards { get; set; }
-
         public int UserId { get; set; }
 
         public string? Name { get; set; }

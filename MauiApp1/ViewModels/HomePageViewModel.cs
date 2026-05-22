@@ -13,7 +13,7 @@ namespace MauiApp1.ViewModels
 {
     internal class HomePageViewModel : INotifyPropertyChanged
     {
-        private readonly AuthClient _authClient;
+        private readonly Cards _cards;
 
         private ObservableCollection<GetCardsListDTO> _cardsLists = new();
         public ObservableCollection<GetCardsListDTO> CardsLists
@@ -43,9 +43,9 @@ namespace MauiApp1.ViewModels
         public ICommand DeleteCardsListCommand { get; }
         public ICommand RenameCardsListCommand { get; }
 
-        public HomePageViewModel(AuthClient authClient)
+        public HomePageViewModel(Cards cards)
         {
-            _authClient = authClient;
+            _cards = cards;
             LoadCardsListsCommand = new Command(async () => await LoadCardsListsAsync(), () => !IsBusy);
             GoToCardListCommand = new Command<GetCardsListDTO>(async (selectedList) => await GoToCardListAsync(selectedList));
             DeleteCardsListCommand = new Command<GetCardsListDTO>(async (selectedList) => await DeleteCardsListAsync(selectedList));
@@ -72,7 +72,7 @@ namespace MauiApp1.ViewModels
                     return;
                 }
 
-                var response = await _authClient.GetUserCardsLists(token);
+                var response = await _cards.GetUserCardsLists(token);
                 if (response.IsSuccessStatusCode)
                 {
                     var lists = await response.Content.ReadFromJsonAsync<IEnumerable<GetCardsListDTO>>();
@@ -84,10 +84,6 @@ namespace MauiApp1.ViewModels
                             CardsLists.Add(item);
                         }
                     }
-                }
-                else
-                {
-                    await Shell.Current.DisplayAlert("Error", "Failed to load flashcards lists.", "Ok");
                 }
             }
             finally

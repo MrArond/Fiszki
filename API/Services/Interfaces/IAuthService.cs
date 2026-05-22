@@ -7,5 +7,7 @@ namespace API.Services.Interfaces
     {
     Task<(bool, string)> Login(LoginDTO loginDTO);
     Task<(bool, string)> Register(RegisterDTO registerDTO);
+
+    
     }
 }

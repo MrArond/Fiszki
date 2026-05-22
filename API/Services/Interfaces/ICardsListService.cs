@@ -7,10 +7,6 @@ namespace API.Services.Interfaces
         Task<(bool, string)> AddCardsList(AddCardsListDTO addCardsListDTO, int Id);
 
         Task<(bool, string, IEnumerable<GetCardsListDTO>?)> GetUserCardsLists(int userId);
-
-        Task<(bool isSuccess, string message)> DeleteCardsList(int listId, int userId);
-
-        Task<(bool isSuccess, string message)> UpdateCardsListName(UpdateCardsListNameDTO updateCardsListNameDTO, int userId);
     }
 }
     

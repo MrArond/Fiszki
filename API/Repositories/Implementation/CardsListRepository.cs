@@ -44,40 +44,5 @@ namespace API.Repositories.Implementation
                 throw new Exception("Error retrieving flash cards lists.");
             }
         }
-
-        public async Task<bool> DeleteCardsList(int listId, int userId)
-        {
-            var list = await _datacontext.FlashCardsLists.FirstOrDefaultAsync(l => l.CardsListID == listId && l.UserId == userId);
-            if (list == null)
-            {
-                return false;
-            }
-
-            var cards = await _datacontext.FlashCards
-                .Where(c => c.FlashCardsListsCardsListID == list.CardsListID)
-                .ToListAsync();
-
-            if (cards.Count != 0)
-            {
-                _datacontext.FlashCards.RemoveRange(cards);
-            }
-
-            _datacontext.FlashCardsLists.Remove(list);
-            await _datacontext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<FlashCardsLists?> UpdateCardsListName(UpdateCardsListNameDTO updateCardsListNameDTO, int userId)
-        {
-            var list = await _datacontext.FlashCardsLists.FirstOrDefaultAsync(l => l.CardsListID == updateCardsListNameDTO.CardsListID && l.UserId == userId);
-            if (list == null)
-            {
-                return null;
-            }
-
-            list.Name = updateCardsListNameDTO.Name;
-            await _datacontext.SaveChangesAsync();
-            return list;
-        }
     }
 }

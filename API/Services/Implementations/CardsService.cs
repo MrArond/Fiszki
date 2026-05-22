@@ -83,5 +83,21 @@ namespace API.Services.Implementations
 
             return (true, "Zaktualizowano nazwę karty.");
         }
+        public async Task<(bool isSuccess, string message)> DeleteCard(DeleteCardDTO deleteCardDTO, int userId)
+        {
+            try
+            {
+                var result = await _cardsRepository.DeleteCard(deleteCardDTO, userId);
+                if (!result)
+                {
+                    return (false, "Karta nie istnieje lub nie masz do niej dostępu.");
+                }
+                return (true, "Karta usunięta pomyślnie.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error deleting card: {ex.Message}");
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using API.DATA.Context;
+using API.DATA.Models;
 using API.DTOs;
+using API.Services.Implementations;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,8 +24,12 @@ namespace API.Controllers
        
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO forgotPassword)
         {
-            var result = await _forgotService.ForgotPassword(forgotPassword);
-            return Ok(result);
+            var (isSuccess, message) = await _forgotService.ForgotPassword(forgotPassword);
+            if (isSuccess)
+            {
+                return Ok(new { message });
+            }
+            return BadRequest(new { message });
         }
         private readonly IForgotService _forgotService;
 

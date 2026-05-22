@@ -78,7 +78,7 @@ namespace MauiApp1.ViewModels
                 Name = ListCard.Name,
                 Description = ListCard.Description
             };
-            var token = await SecureStorage.GetAsync("auth_token");
+            var token = await SecureStorage.Default.GetAsync("auth_token");
             var response = await _AuthClient.AddCardsList(AddCardListDTO, token);
 
             if (response.IsSuccessStatusCode)

@@ -21,48 +21,21 @@ namespace API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("API.DATA.Models.FlashCards", b =>
-                {
-                    b.Property<int>("CardsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CardsId"));
-
-                    b.Property<string>("CardName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("FlashCardsListsCardsListID")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Translate")
-                        .HasColumnType("text");
-
-                    b.HasKey("CardsId");
-
-                    b.HasIndex("FlashCardsListsCardsListID");
-
-                    b.ToTable("FlashCards");
-                });
-
             modelBuilder.Entity("API.DATA.Models.FlashCardsLists", b =>
                 {
-                    b.Property<int>("CardsListID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CardsListID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
+                    b.Property<int>("Name")
+                        .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("CardsListID");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -101,15 +74,6 @@ namespace API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.DATA.Models.FlashCards", b =>
-                {
-                    b.HasOne("API.DATA.Models.FlashCardsLists", null)
-                        .WithMany("FlashCards")
-                        .HasForeignKey("FlashCardsListsCardsListID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("API.DATA.Models.FlashCardsLists", b =>
                 {
                     b.HasOne("API.DATA.Models.User", null)
@@ -117,11 +81,6 @@ namespace API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API.DATA.Models.FlashCardsLists", b =>
-                {
-                    b.Navigation("FlashCards");
                 });
 
             modelBuilder.Entity("API.DATA.Models.User", b =>
